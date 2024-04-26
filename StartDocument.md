@@ -1,31 +1,31 @@
-# **Recipe Cooking Application**
+# **CookOff**
 
 ## Introduction
-
-This is just a sample introduction
-*** A recipe cooking application is a tool designed to simplify the process of selecting and preparing meals. It caters to individuals with varying cooking skills, from beginners to experienced chefs, and offers a wide range of recipes to choose from. The primary goal of this application is to save users time and reduce the decision-making process when it comes to choosing what to cook. It provides essential features making it easier for users to plan and prepare meals. ***
+This document serves as a start document and offers an overview for the practical assignment for the "C#2" course. 
+The purpose of this course is to teach students how to make use of advanced C# techniques as well of .NET MAUI.
 
 ## Application description
-*** Cooking recipe application. Name: CookOff. UI Which holds all recipes. Recipe button creation. Recipe page pops up enter ingredients/steps. Do step if requires baking time or not. Recipe page has checkmarks for each ingredient/step. It says Bought ingredients 1/5 2/5 3/5 as well for steps completed 1/5 2/5 whatever and then the text gets changed to completed if everything is made. Once everything is checked it says Bon Appetit! ***
+CookOff is a .NET MAUI cooking assistant application which will assist the user in cooking their favourite meal. The user
+will have to create their favourite recipes by writing the ingredients and the steps. Additional features that the application
+includes are: baking timer at the step required, ability to keep track of ingredients or steps completed, and the 
+difficulty of the recipe.
 
 ## Features
-- 
-- 
-- 
-- 
-- 
-- 
+- Recipe creation
+- Steps
+- Ingredients
+- Ability to keep track of ingredients
+- Ability to keep track of steps completed
+- Baking timer
 
 ## MoSCoW Analysis
-Add `✅` to the MoSCoW. 
+| Priority    | Task                                                                                                                                                   |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Must have   | Multiple OS Support, Recipe creations, steps, ingredients, ability to keep track of ingredients, Ability to keep track of steps completed, Baking Timer |     
+| Should have | Image for recipe, Beep sound for timer                                                                                                                 |
+| Could have  | Rating of recipes                                                                                                                                      |
+| Won't have  | User Authentication                                                                                                                                    |
 
-| Serial Number | Requirement                                                       |  Must have  | Should have | Could have  | Won't have  |
-|:-------------:|-------------------------------------------------------------------|:-----------:|:-----------:|:-----------:|:-----------:|
-|      1.       |                                                                   |             |             |             |             |
-|      2.       |                                                                   |             |             |             |             |
-|      3.       |                                                                   |             |             |             |             |
-|      4.       |                                                                   |             |             |             |             |
-|      5.       |                                                                   |             |             |             |             |
 
 
 ## Coding Features
@@ -33,7 +33,7 @@ As part of the course and in order to implement some of the features, the projec
 
 - GitHub for Version Management
 - .NET 8 or older 
-- WinUI2/WinUI3/.NET MAUI
+- .NET MAUI
 - MVVM
 
 ## Definition of done
