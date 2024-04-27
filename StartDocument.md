@@ -43,7 +43,7 @@ The project is done, when the following requirements are met:
 - All the must have functionalities from the MoSCow Analysis have been implemented
 
 ## Class Diagram
-***Insert Class Diagram Here***
+![Class diagram](./CookOffClassDiagram.jpg)
 
 ## About the developers
 | Name              | Student email                                                                               |
