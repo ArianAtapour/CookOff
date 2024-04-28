@@ -19,13 +19,18 @@ difficulty of the recipe.
 - Baking timer
 
 ## MoSCoW Analysis
-| Priority    | Task                                                                                                                                                   |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Must have   | Multiple OS Support, Recipe creations, steps, ingredients, ability to keep track of ingredients, Ability to keep track of steps completed, Baking Timer |     
-| Should have | Image for recipe, Beep sound for timer                                                                                                                 |
-| Could have  | Rating of recipes                                                                                                                                      |
-| Won't have  | User Authentication                                                                                                                                    |
 
+| Serial Number | Requirement                                                       | Must have | Should have | Could have | Won't have |
+|:-------------:|-------------------------------------------------------------------|:---------:|:-----------:|:----------:|:----------:|
+|      1.       | Multiple OS Support                                               |     ✅     |             |            |            |
+|      2.       | Creation of recipes, steps, ingredients                           |     ✅     |             |            |            |
+|      3.       | Ability to keep track of ingredients                              |     ✅     |             |            |            |
+|      4.       | Ability to keep track of steps completed                          |     ✅     |             |            |            |
+|      5.       | Baking Timer                                                      |     ✅     |             |            |            |
+|      6.       | Image for recipe                                                  |           |      ✅      |            |            |
+|      7.       | Audio cue for the end of timer                                    |           |      ✅      |            |            |
+|      8.       | Rating of recipes                                                 |           |             |     ✅      |            |
+|      9.       | User Authentication                                               |           |             |            |     ✅      |
 
 
 ## Coding Features
