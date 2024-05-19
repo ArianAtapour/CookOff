@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:CookOff" 
+             xmlns:local="clr-namespace:CookOff.ViewModels"
              x:Class="CookOff.MainPage">
 
     <ContentPage.BindingContext>
@@ -24,4 +24,3 @@
         </CollectionView>
     </StackLayout>
 </ContentPage>
-

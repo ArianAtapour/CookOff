@@ -1,11 +1,10 @@
 ﻿using System;
-using Android.SE.Omapi;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace CookOff
+namespace CookOff.ViewModels
 {
     //Main Page View Model
     public class MainPageVM : INotifyPropertyChanged

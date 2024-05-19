@@ -1,9 +1,11 @@
 ﻿using System;
-namespace CookOff
+using System.Collections.Generic;
+
+namespace CookOff.Models
 {
-    //Recipe Model
-	public class Recipe
-	{
+    // Recipe model
+    public class Recipe
+    {
         private string name;
         private string imagePath;
         private double rating;
@@ -21,7 +23,7 @@ namespace CookOff
         {
             if (String.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Name cannot be null or empty !");
+                throw new ArgumentException("Name cannot be null or empty!");
             }
             else
             {
@@ -38,7 +40,7 @@ namespace CookOff
         {
             if (String.IsNullOrEmpty(imagePath))
             {
-                throw new ArgumentException("Image path is null or empty !");
+                throw new ArgumentException("Image path cannot be null or empty!");
             }
             else
             {
@@ -53,9 +55,9 @@ namespace CookOff
 
         public void setRating(double rating)
         {
-            if (rating < 1)
+            if (rating < 1 || rating > 5)
             {
-                throw new ArgumentException("Rating can not be lower than 1");
+                throw new ArgumentException("Rating must be between 1 and 5!");
             }
             else
             {
@@ -79,5 +81,3 @@ namespace CookOff
         }
     }
 }
-
-

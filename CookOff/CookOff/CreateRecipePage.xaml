@@ -1,25 +1,31 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CookOff.ViewModels"
              x:Class="CookOff.CreateRecipePage">
+
     <ContentPage.BindingContext>
         <local:CreateRecipeVM />
     </ContentPage.BindingContext>
     <StackLayout Padding="10">
         <Entry Placeholder="Recipe Name" Text="{Binding RecipeName}" />
         <Button Text="Upload Image" Command="{Binding UploadImageCommand}" />
+        <Image Source="{Binding ImagePath}" HeightRequest="200" />
+        
         <Picker Title="Rating" ItemsSource="{Binding Ratings}" SelectedItem="{Binding Rating}" />
-
+        
         <CollectionView ItemsSource="{Binding Steps}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
-                        <Label Text="{Binding GetName}" />
-                        <StackLayout Orientation="Horizontal">
+                        <Entry Placeholder="Step Description" Text="{Binding Description}" />
+                        <CheckBox IsChecked="{Binding TimerRequired}" />
+                        <Label Text="Add Baking Timer?" />
+                        <StackLayout IsVisible="{Binding TimerRequired}">
                             <Label Text="Set Timer" />
-                            <Entry Placeholder="HH" Keyboard="Numeric" Text="{Binding Hours, Mode=TwoWay}" WidthRequest="40" />
-                            <Entry Placeholder="MM" Keyboard="Numeric" Text="{Binding Minutes, Mode=TwoWay}" WidthRequest="40" />
-                            <Entry Placeholder="SS" Keyboard="Numeric" Text="{Binding Seconds, Mode=TwoWay}" WidthRequest="40" />
+                            <Entry Placeholder="HH" Keyboard="Numeric" Text="{Binding Hours}" WidthRequest="40" />
+                            <Entry Placeholder="MM" Keyboard="Numeric" Text="{Binding Minutes}" WidthRequest="40" />
+                            <Entry Placeholder="SS" Keyboard="Numeric" Text="{Binding Seconds}" WidthRequest="40" />
                         </StackLayout>
                     </StackLayout>
                 </DataTemplate>

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CookOff
+namespace CookOff.Models
 {
     //Step model
 	public class Step
@@ -7,9 +7,11 @@ namespace CookOff
         private string name;
         private bool timeReq;
         private TimeSpan timer;
+        private List<Ingredient> ingredients;
 
         public Step(string name, bool timeReq, TimeSpan timer)
         {
+            this.ingredients = new List<Ingredient>();
             setName(name);
             isTimeReq(timeReq);
             setTimer(timer);
@@ -50,6 +52,16 @@ namespace CookOff
         public TimeSpan getTimer()
         {
             return this.timer;
+        }
+
+        public void addIngredient(Ingredient ingredient)
+        {
+            this.ingredients.Add(ingredient);
+        }
+
+        public List<Ingredient> GetIngredients()
+        {
+            return this.ingredients;
         }
     }
 }
