@@ -1,6 +1,7 @@
 ﻿using System;
 namespace CookOff
 {
+    //Recipe Model
 	public class Recipe
 	{
         private string name;
@@ -60,6 +61,11 @@ namespace CookOff
             {
                 this.rating = rating;
             }
+        }
+
+        public double getRating()
+        {
+            return this.rating;
         }
 
         public void addStep(Step step)

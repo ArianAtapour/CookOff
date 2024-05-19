@@ -1,6 +1,7 @@
 ﻿using System;
 namespace CookOff
 {
+    //Step model
 	public class Step
 	{
         private string name;
