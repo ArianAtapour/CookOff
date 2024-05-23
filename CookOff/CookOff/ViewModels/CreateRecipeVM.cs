@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CookOff.Models;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CookOff.Models;
 namespace CookOff
 {
 	//CSV Dependency
