@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CookOff.ViewModels"
+             x:Class="CookOff.ViewRecipe"
+             Title="Recipe Name"
+             BackgroundColor="#EEE2DC">
+    <!-- Light Brown Background Color -->
+
+    <ContentPage.BindingContext>
+        <vm:ViewRecipe />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="10">
+
+            <!-- Image -->
+            <Image Source="food.png" 
+                   Aspect="AspectFill"
+                   HeightRequest="150"
+                   WidthRequest="150"
+                   HorizontalOptions="Center" />
+
+            <!-- Deliciousness Rating in Stars -->
+            <Frame BorderColor="#AC8968" BackgroundColor="#AC8968" Padding="10" Margin="0,10,0,10">
+                <!-- Brown Border Color -->
+                <Label Text="Deliciousness Rating in stars"
+                       FontSize="Medium"
+                       HorizontalOptions="Center"/>
+            </Frame>
+
+            <!-- Ingredients Used -->
+            <Frame BorderColor="#AC8968"  BackgroundColor="#AC8968" Padding="10">
+                <!-- Brown Border Color -->
+                <StackLayout>
+                    <Label Text="Ingredients Used" FontAttributes="Bold" BackgroundColor="#AC8968" FontSize="Medium" />
+                    <Label Text="Ingredient 1: 3 Pcs" BackgroundColor="#AC8968"/>
+                    <Label Text="Ingredient 2: 2 Kgs" BackgroundColor="#AC8968"/>
+                    <Label Text="Ingredient 3: 4 Tsp" BackgroundColor="#AC8968"/>
+                    <Label Text="Ingredient 4: 1 Tbsp" BackgroundColor="#AC8968"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Current Step -->
+            <Frame BorderColor="#AC8968" Padding="10" BackgroundColor="#AC8968" Margin="0,10,0,10">
+                <!-- Brown Border Color -->
+                <StackLayout>
+                    <Label Text="Current Step" FontAttributes="Bold" FontSize="Medium" />
+                    <Label Text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Timer -->
+            <Grid HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="hoursEntry" Placeholder="00" WidthRequest="50" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+                <Label Text=":" VerticalTextAlignment="Center"/>
+                <Entry x:Name="minutesEntry" Placeholder="00" WidthRequest="100" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+                <Label Text=":" VerticalTextAlignment="Center"/>
+                <Entry x:Name="secondsEntry" Placeholder="00" WidthRequest="150" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+            </Grid>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,10">
+                <Button Text="Start" Command="{Binding StartCommand}" BackgroundColor="#865D36" TextColor="White"/>
+                <!-- Light Brown Button Color -->
+                <Button Text="Stop" Command="{Binding StopCommand}" BackgroundColor="#865D36" TextColor="White"/>
+                <!-- Light Brown Button Color -->
+            </StackLayout>
+
+            <!-- Steps -->
+            <Frame BorderColor="#AC8968" BackgroundColor="#AC8968" Padding="10">
+                <!-- Brown Border Color -->
+                <StackLayout>
+                    <Label Text="Step 1 00:20:00" />
+                    <Label Text="Step 2 00:20:00" />
+                    <Label Text="Step 3 00:20:00" />
+                    <Label Text="Step 4 00:20:00" />
+                    <Label Text="Step 5 00:20:00" />
+                    <Label Text="Step 6 00:20:00" />
+                    <Label Text="Step 7 00:20:00" />
+                    <Label Text="Step 8 00:20:00" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Close Button -->
+            <Button Text="Close" Command="{Binding CloseCommand}" BackgroundColor="#865D36" TextColor="White"/>
+            <!-- Light Brown Button Color -->
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

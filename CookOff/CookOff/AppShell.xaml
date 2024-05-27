@@ -9,6 +9,8 @@
 
 <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
 <ShellContent Title="CreateRecipePage" ContentTemplate="{DataTemplate local:CreateRecipePage}" />
+<ShellContent Title="View Recipe" ContentTemplate="{DataTemplate local:ViewRecipe}" />
+
 
 
 </Shell>

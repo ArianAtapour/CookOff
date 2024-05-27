@@ -1,9 +1,10 @@
 ﻿using System;
+using CookOff.Models;
 namespace CookOff
 {
-	//CSV Dependency
-	public class CsvDependecy
-	{
+    //CSV Dependency
+    public class CsvDependecy
+    {
         private static readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "recipes.csv");
 
         private static void createCsvIfNotFound()
