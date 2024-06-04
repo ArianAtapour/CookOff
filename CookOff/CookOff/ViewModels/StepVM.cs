@@ -1,51 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace CookOff.ViewModels
 {
     public class StepVM : INotifyPropertyChanged
     {
+        private string name;
         private string description;
         private bool timerRequired;
         private int hours;
         private int minutes;
         private int seconds;
 
-        public StepVM(string description)
+        public StepVM(string name)
         {
-            setDescription(description);
+            this.name = name;
+            Description = string.Empty;
             TimerRequired = false;
             Hours = 0;
             Minutes = 0;
             Seconds = 0;
         }
 
-        public void setDescription(string description)
+        public string Name
         {
-            if (string.IsNullOrEmpty(description))
+            get => name;
+            set
             {
-                throw new ArgumentException("Description cannot be null or empty!");
-            }
-            else
-            {
-                this.description = description;
+                name = value;
                 OnPropertyChanged();
             }
         }
 
-        public string getDescription()
+        public string Description
         {
-            return this.description;
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool TimerRequired
         {
-            get { return timerRequired; }
+            get => timerRequired;
             set
             {
                 timerRequired = value;
@@ -55,52 +54,31 @@ namespace CookOff.ViewModels
 
         public int Hours
         {
-            get { return hours; }
+            get => hours;
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Hours cannot be negative!");
-                }
-                else
-                {
-                    hours = value;
-                    OnPropertyChanged();
-                }
+                hours = value;
+                OnPropertyChanged();
             }
         }
 
         public int Minutes
         {
-            get { return minutes; }
+            get => minutes;
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Minutes cannot be negative!");
-                }
-                else
-                {
-                    minutes = value;
-                    OnPropertyChanged();
-                }
+                minutes = value;
+                OnPropertyChanged();
             }
         }
 
         public int Seconds
         {
-            get { return seconds; }
+            get => seconds;
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Seconds cannot be negative!");
-                }
-                else
-                {
-                    seconds = value;
-                    OnPropertyChanged();
-                }
+                seconds = value;
+                OnPropertyChanged();
             }
         }
 
@@ -111,4 +89,3 @@ namespace CookOff.ViewModels
         }
     }
 }
-

@@ -1,7 +1,8 @@
 ﻿using System;
+
 namespace CookOff.Models
 {
-    //Step model
+    // Step model
     public class Step
     {
         private string description;
@@ -17,7 +18,7 @@ namespace CookOff.Models
 
         public void setDescription(string description)
         {
-            if (String.IsNullOrEmpty(description))
+            if (string.IsNullOrEmpty(description))
             {
                 throw new ArgumentException("Description cannot be null or empty!");
             }
@@ -60,5 +61,3 @@ namespace CookOff.Models
         }
     }
 }
-
-

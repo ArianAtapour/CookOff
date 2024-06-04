@@ -27,25 +27,23 @@
                 <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Ingredient Name" Text="{Binding IngredientName}" Margin="0,0,20,0"/>
                 <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Quantity" Text="{Binding IngredientQuantity}" Margin="0,0,20,0"/>
                 <Frame BackgroundColor="#AC8968" Margin="0" Padding="0">
-                    <Picker WidthRequest="300" VerticalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Pieces (pcs)</x:String>
-                                <x:String>Teaspoons (tsp)</x:String>
-                                <x:String>Tablespoons (tbsp)</x:String>
-                                <x:String>Milliliters (ml)</x:String>
-                                <x:String>Liters (l)</x:String>
-                                <x:String>Grams (g)</x:String>
-                                <x:String>Kilograms (kg)</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <Picker WidthRequest="300" VerticalOptions="FillAndExpand" ItemsSource="{Binding IngredientUnits}" SelectedItem="{Binding IngredientUnit}" />
                 </Frame>
             </HorizontalStackLayout>
 
             <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
 
-            <Label Text="{Binding SelectedIngredientText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,30"/>
+            <CollectionView ItemsSource="{Binding Ingredients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding Quantity}" TextColor="Black"/>
+                            <Label Text="{Binding Unit}" TextColor="Black"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <CollectionView ItemsSource="{Binding Steps}">
                 <CollectionView.ItemTemplate>

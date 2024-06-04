@@ -18,7 +18,7 @@ namespace CookOff.Models
 
         public void setName(string name)
         {
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Name cannot be null or empty!");
             }
@@ -35,7 +35,7 @@ namespace CookOff.Models
 
         public void setUnit(string unit)
         {
-            if (String.IsNullOrEmpty(unit))
+            if (string.IsNullOrEmpty(unit))
             {
                 throw new ArgumentException("Unit cannot be null or empty!");
             }

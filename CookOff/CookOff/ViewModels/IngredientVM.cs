@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookOff.ViewModels
 {
@@ -21,23 +16,47 @@ namespace CookOff.ViewModels
             setQuantity(quantity);
         }
 
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Unit
+        {
+            get => unit;
+            set
+            {
+                unit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Quantity
+        {
+            get => quantity;
+            set
+            {
+                quantity = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void setName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Name cannot be null or empty!");
             }
-            else
-            {
-                this.name = name;
-                OnPropertyChanged();
-            }
+            this.name = name;
+            OnPropertyChanged(nameof(Name));
         }
 
-        public string getName()
-        {
-            return this.name;
-        }
+        public string getName() => name;
 
         public void setUnit(string unit)
         {
@@ -45,17 +64,11 @@ namespace CookOff.ViewModels
             {
                 throw new ArgumentException("Unit cannot be null or empty!");
             }
-            else
-            {
-                this.unit = unit;
-                OnPropertyChanged();
-            }
+            this.unit = unit;
+            OnPropertyChanged(nameof(Unit));
         }
 
-        public string getUnit()
-        {
-            return this.unit;
-        }
+        public string getUnit() => unit;
 
         public void setQuantity(string quantity)
         {
@@ -63,17 +76,11 @@ namespace CookOff.ViewModels
             {
                 throw new ArgumentException("Quantity must be a positive number and greater than zero!");
             }
-            else
-            {
-                this.quantity = quantity;
-                OnPropertyChanged();
-            }
+            this.quantity = quantity;
+            OnPropertyChanged(nameof(Quantity));
         }
 
-        public string getQuantity()
-        {
-            return this.quantity;
-        }
+        public string getQuantity() => quantity;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

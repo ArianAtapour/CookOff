@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CookOff.Models;
+using CookOff.Utils;  // Ensure this using directive is present
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -12,6 +13,8 @@ namespace CookOff.ViewModels
 {
     public class CreateRecipeVM : INotifyPropertyChanged
     {
+        private static int RecipeCounter = 1;
+
         private string _recipeName;
         public string RecipeName
         {
@@ -83,6 +86,18 @@ namespace CookOff.ViewModels
 
         public ObservableCollection<int> Ratings { get; } = new ObservableCollection<int> { 1, 2, 3, 4, 5 };
 
+        private ObservableCollection<string> _ingredientUnits;
+        public ObservableCollection<string> IngredientUnits { get; } = new ObservableCollection<string>
+        {
+            "Pieces (pcs)",
+            "Teaspoons (tsp)",
+            "Tablespoons (tbsp)",
+            "Milliliters (ml)",
+            "Liters (l)",
+            "Grams (g)",
+            "Kilograms (kg)"
+        };
+
         private ObservableCollection<StepVM> _steps;
         public ObservableCollection<StepVM> Steps
         {
@@ -131,31 +146,45 @@ namespace CookOff.ViewModels
 
         private void OnAddIngredient()
         {
-            Ingredients.Add(new IngredientVM(
-                IngredientName, IngredientUnit, IngredientQuantity));
+            if (!string.IsNullOrWhiteSpace(IngredientName) &&
+                !string.IsNullOrWhiteSpace(IngredientQuantity) &&
+                !string.IsNullOrWhiteSpace(IngredientUnit))
+            {
+                Ingredients.Add(new IngredientVM(
+                    IngredientName, IngredientUnit, IngredientQuantity));
 
-            // Clear input fields
-            IngredientName = string.Empty;
-            IngredientQuantity = string.Empty;
-            IngredientUnit = string.Empty;
+                // Clear input fields
+                IngredientName = string.Empty;
+                IngredientQuantity = string.Empty;
+                IngredientUnit = string.Empty;
+            }
         }
 
         private async void OnSubmit()
         {
-            var newRecipe = new Recipe(RecipeName, ImagePath, Rating);
-            foreach (var StepVM in Steps)
+            var newRecipe = new Recipe(RecipeName, ImagePath, Rating)
             {
-                var timer = new TimeSpan(StepVM.Hours, StepVM.Minutes, StepVM.Seconds);
-                newRecipe.addStep(new Step(StepVM.getDescription(), StepVM.TimerRequired, timer));
+                RecipeID = RecipeCounter++
+            };
+
+            foreach (var stepVM in Steps)
+            {
+                var timer = new TimeSpan(stepVM.Hours, stepVM.Minutes, stepVM.Seconds);
+                newRecipe.AddStep(new Step(stepVM.Description, stepVM.TimerRequired, timer));
             }
 
             foreach (var ingredient in Ingredients)
             {
-                newRecipe.addIngredient(new Ingredient(ingredient.getName(), ingredient.getUnit(), double.Parse(ingredient.getQuantity())));
+                newRecipe.AddIngredient(new Ingredient(ingredient.Name, ingredient.Unit, double.Parse(ingredient.Quantity)));
             }
 
-            // Save or process newRecipe object as needed
-            // For example, you could write it to a file or send it to a backend service
+            // Save the newRecipe object to CSV files
+            string projectDir = GetProjectDirectory();
+            string recipesFilePath = Path.Combine(projectDir, "recipes.csv");
+            string ingredientsFilePath = Path.Combine(projectDir, "ingredients.csv");
+            string stepsFilePath = Path.Combine(projectDir, "steps.csv");
+
+            CookOff.Utils.CsvHelper.AppendRecipeToCsv(recipesFilePath, ingredientsFilePath, stepsFilePath, newRecipe);
 
             await Shell.Current.GoToAsync("..");
         }
