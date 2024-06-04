@@ -46,11 +46,12 @@
             <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
 
             <Label Text="{Binding SelectedIngredientText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,30"/>
-            
+
             <CollectionView ItemsSource="{Binding Steps}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="0,0,0,30" HorizontalOptions="CenterAndExpand">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"/>
                             <Entry Placeholder="Step Description" Text="{Binding Description}" WidthRequest="950" HeightRequest="150"/>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <CheckBox IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
@@ -73,7 +74,7 @@
                 <Button BackgroundColor="#865D36" Text="Submit" BorderColor="Black" BorderWidth="1" Command="{Binding SubmitCommand}" WidthRequest="300" Margin="0,0,20,0"/>
                 <Button BackgroundColor="#865D36" Text="Back" BorderColor="Black" BorderWidth="1" Command="{Binding BackCommand}" WidthRequest="300"/>
             </HorizontalStackLayout>
-           
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

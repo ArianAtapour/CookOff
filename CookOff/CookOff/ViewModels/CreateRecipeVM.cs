@@ -83,6 +83,7 @@ namespace CookOff.ViewModels
             Steps.Add(new StepViewModel($"Step {stepCount++}"));
         }
 
+
         private async void OnSubmit()
         {
             var newRecipe = new Recipe(RecipeName, ImagePath, Rating);
@@ -136,6 +137,7 @@ namespace CookOff.ViewModels
     public class StepViewModel : INotifyPropertyChanged
     {
         private string _name;
+        private string _description;
         private bool _timerRequired;
         private int _hours;
         private int _minutes;
@@ -147,6 +149,16 @@ namespace CookOff.ViewModels
             set
             {
                 _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
                 OnPropertyChanged();
             }
         }
@@ -194,6 +206,7 @@ namespace CookOff.ViewModels
         public StepViewModel(string name)
         {
             Name = name;
+            Description = string.Empty;
             TimerRequired = false;
             Hours = 0;
             Minutes = 0;
@@ -206,4 +219,5 @@ namespace CookOff.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }
