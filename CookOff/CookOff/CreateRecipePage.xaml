@@ -27,7 +27,7 @@
                 <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Ingredient Name" Text="{Binding IngredientName}" Margin="0,0,20,0"/>
                 <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Quantity" Text="{Binding IngredientQuantity}" Margin="0,0,20,0"/>
                 <Frame BackgroundColor="#AC8968" Margin="0" Padding="0">
-                    <Picker WidthRequest="300" VerticalOptions="FillAndExpand">
+                    <Picker WidthRequest="300" VerticalOptions="FillAndExpand" ItemsSource="{Binding Units}" SelectedItem="{Binding IngredientUnit}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Pieces (pcs)</x:String>
@@ -43,15 +43,25 @@
                 </Frame>
             </HorizontalStackLayout>
 
-            <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
+            <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}" Margin="0,0,0,20"/>
 
-            <Label Text="{Binding SelectedIngredientText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,30"/>
+            <CollectionView ItemsSource="{Binding Ingredients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black" Margin="0,0,10,0"/>
+                            <Label Text="{Binding Quantity}" FontAttributes="Bold" TextColor="Black" Margin="0,0,10,0"/>
+                            <Label Text="{Binding Unit}" FontAttributes="Bold" TextColor="Black" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <CollectionView ItemsSource="{Binding Steps}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="0,0,0,30" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"/>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
                             <Entry Placeholder="Step Description" Text="{Binding Description}" WidthRequest="950" HeightRequest="150"/>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <CheckBox IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
