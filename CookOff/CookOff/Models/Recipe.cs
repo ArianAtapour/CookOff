@@ -8,15 +8,17 @@ namespace CookOff.Models
     {
         private string name;
         private string imagePath;
-        private double rating;
+        private int rating;
         private List<Step> steps;
+        private List<Ingredient> ingredients;
 
-        public Recipe(string name, string imagePath, double rating)
+        public Recipe(string name, string imagePath, int rating)
         {
-            this.steps = new List<Step>();
             setName(name);
             setImagePath(imagePath);
             setRating(rating);
+            this.steps = new List<Step>();
+            this.ingredients = new List<Ingredient>();
         }
 
         public void setName(string name)
@@ -53,7 +55,7 @@ namespace CookOff.Models
             return this.imagePath;
         }
 
-        public void setRating(double rating)
+        public void setRating(int rating)
         {
             if (rating < 1 || rating > 5)
             {
@@ -65,19 +67,43 @@ namespace CookOff.Models
             }
         }
 
-        public double getRating()
+        public int getRating()
         {
             return this.rating;
         }
 
         public void addStep(Step step)
         {
-            this.steps.Add(step);
+            if (step == null)
+            {
+                throw new ArgumentException("Step cannot be null!");
+            }
+            else
+            {
+                this.steps.Add(step);
+            }
         }
 
         public List<Step> getSteps()
         {
             return this.steps;
+        }
+
+        public void addIngredient(Ingredient ingredient)
+        {
+            if (ingredient == null)
+            {
+                throw new ArgumentException("Ingredient cannot be null!");
+            }
+            else
+            {
+                this.ingredients.Add(ingredient);
+            }
+        }
+
+        public List<Ingredient> getIngredients()
+        {
+            return this.ingredients;
         }
     }
 }

@@ -25,17 +25,7 @@ namespace CookOff.ViewModels
         public MainPageVM()
         {
             Recipes = new ObservableCollection<Recipe>();
-            LoadRecipes();
             NavigateToCreateRecipeCommand = new Command(OnNavigateToCreateRecipe);
-        }
-
-        private void LoadRecipes()
-        {
-            var recipes = CsvDependecy.readRecipe();
-            foreach (var recipe in recipes)
-            {
-                Recipes.Add(recipe);
-            }
         }
 
         private async void OnNavigateToCreateRecipe()

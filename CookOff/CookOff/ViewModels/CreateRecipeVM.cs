@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CookOff.Models;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -82,8 +83,8 @@ namespace CookOff.ViewModels
 
         public ObservableCollection<int> Ratings { get; } = new ObservableCollection<int> { 1, 2, 3, 4, 5 };
 
-        private ObservableCollection<StepViewModel> _steps;
-        public ObservableCollection<StepViewModel> Steps
+        private ObservableCollection<StepVM> _steps;
+        public ObservableCollection<StepVM> Steps
         {
             get { return _steps; }
             set
@@ -93,8 +94,8 @@ namespace CookOff.ViewModels
             }
         }
 
-        private ObservableCollection<IngredientViewModel> _ingredients;
-        public ObservableCollection<IngredientViewModel> Ingredients
+        private ObservableCollection<IngredientVM> _ingredients;
+        public ObservableCollection<IngredientVM> Ingredients
         {
             get { return _ingredients; }
             set
@@ -114,8 +115,8 @@ namespace CookOff.ViewModels
 
         public CreateRecipeVM()
         {
-            Steps = new ObservableCollection<StepViewModel>();
-            Ingredients = new ObservableCollection<IngredientViewModel>();
+            Steps = new ObservableCollection<StepVM>();
+            Ingredients = new ObservableCollection<IngredientVM>();
             AddStepCommand = new Command(OnAddStep);
             AddIngredientsCommand = new Command(OnAddIngredient);
             SubmitCommand = new Command(OnSubmit);
@@ -125,17 +126,13 @@ namespace CookOff.ViewModels
 
         private void OnAddStep()
         {
-            Steps.Add(new StepViewModel($"Step {stepCount++}"));
+            Steps.Add(new StepVM($"Step {stepCount++}"));
         }
 
         private void OnAddIngredient()
         {
-            Ingredients.Add(new IngredientViewModel
-            {
-                Name = IngredientName,
-                Quantity = IngredientQuantity,
-                Unit = IngredientUnit
-            });
+            Ingredients.Add(new IngredientVM(
+                IngredientName, IngredientUnit, IngredientQuantity));
 
             // Clear input fields
             IngredientName = string.Empty;
@@ -145,8 +142,20 @@ namespace CookOff.ViewModels
 
         private async void OnSubmit()
         {
-            // Here you can implement the logic to handle the submission of the recipe
-            // For example, saving the recipe data to a file or a database
+            var newRecipe = new Recipe(RecipeName, ImagePath, Rating);
+            foreach (var StepVM in Steps)
+            {
+                var timer = new TimeSpan(StepVM.Hours, StepVM.Minutes, StepVM.Seconds);
+                newRecipe.addStep(new Step(StepVM.getDescription(), StepVM.TimerRequired, timer));
+            }
+
+            foreach (var ingredient in Ingredients)
+            {
+                newRecipe.addIngredient(new Ingredient(ingredient.getName(), ingredient.getUnit(), double.Parse(ingredient.getQuantity())));
+            }
+
+            // Save or process newRecipe object as needed
+            // For example, you could write it to a file or send it to a backend service
 
             await Shell.Current.GoToAsync("..");
         }
@@ -172,20 +181,14 @@ namespace CookOff.ViewModels
                     string projectDirectory = GetProjectDirectory();
                     string imagesDirectory = Path.Combine(projectDirectory, "images");
 
-                    Console.WriteLine($"Project Directory: {projectDirectory}");
-                    Console.WriteLine($"Images Directory: {imagesDirectory}");
-
                     if (!Directory.Exists(imagesDirectory))
                     {
                         Directory.CreateDirectory(imagesDirectory);
-                        Console.WriteLine("Created images directory.");
                     }
 
                     // Create a unique file name for the image
                     string fileName = Path.GetFileName(result.FullPath);
                     string newFilePath = Path.Combine(imagesDirectory, fileName);
-
-                    Console.WriteLine($"New File Path: {newFilePath}");
 
                     // Copy the selected file to the new directory
                     using (var stream = await result.OpenReadAsync())
@@ -209,140 +212,8 @@ namespace CookOff.ViewModels
         {
             // Assuming the application runs from the bin directory, we can navigate up to the project directory
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
-            Console.WriteLine($"Current Directory: {currentDir}");
-            // Navigate to the project directory by going up one more level
             var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
-            Console.WriteLine($"Determined Project Directory: {projectDir}");
             return projectDir;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class StepViewModel : INotifyPropertyChanged
-    {
-        private string _name;
-        private string _description;
-        private bool _timerRequired;
-        private int _hours;
-        private int _minutes;
-        private int _seconds;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool TimerRequired
-        {
-            get { return _timerRequired; }
-            set
-            {
-                _timerRequired = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int Hours
-        {
-            get { return _hours; }
-            set
-            {
-                _hours = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int Minutes
-        {
-            get { return _minutes; }
-            set
-            {
-                _minutes = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int Seconds
-        {
-            get { return _seconds; }
-            set
-            {
-                _seconds = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public StepViewModel(string name)
-        {
-            Name = name;
-            Description = string.Empty;
-            TimerRequired = false;
-            Hours = 0;
-            Minutes = 0;
-            Seconds = 0;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class IngredientViewModel : INotifyPropertyChanged
-    {
-        private string _name;
-        private string _quantity;
-        private string _unit;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Quantity
-        {
-            get { return _quantity; }
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Unit
-        {
-            get { return _unit; }
-            set
-            {
-                _unit = value;
-                OnPropertyChanged();
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -2,66 +2,61 @@
 namespace CookOff.Models
 {
     //Step model
-	public class Step
-	{
-        private string name;
-        private bool timeReq;
+    public class Step
+    {
+        private string description;
+        private bool timerRequired;
         private TimeSpan timer;
-        private List<Ingredient> ingredients;
 
-        public Step(string name, bool timeReq, TimeSpan timer)
+        public Step(string description, bool timerRequired, TimeSpan timer)
         {
-            this.ingredients = new List<Ingredient>();
-            setName(name);
-            isTimeReq(timeReq);
+            setDescription(description);
+            setTimerRequired(timerRequired);
             setTimer(timer);
         }
 
-        public void setName(string name)
+        public void setDescription(string description)
         {
-            if (String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(description))
             {
-                throw new ArgumentException("Name cannot be null or empty !");
+                throw new ArgumentException("Description cannot be null or empty!");
             }
             else
             {
-                this.name = name;
+                this.description = description;
             }
         }
 
-        public string getName()
+        public string getDescription()
         {
-            return this.name;
+            return this.description;
         }
 
-        public void isTimeReq(bool timeReq)
+        public void setTimerRequired(bool timerRequired)
         {
-            this.timeReq = timeReq;
+            this.timerRequired = timerRequired;
         }
 
-        public bool getTimeReq()
+        public bool getTimerRequired()
         {
-            return this.timeReq;
+            return this.timerRequired;
         }
 
         public void setTimer(TimeSpan timer)
         {
-            this.timer = timer;
+            if (timer < TimeSpan.Zero)
+            {
+                throw new ArgumentException("Timer cannot be negative!");
+            }
+            else
+            {
+                this.timer = timer;
+            }
         }
 
         public TimeSpan getTimer()
         {
             return this.timer;
-        }
-
-        public void addIngredient(Ingredient ingredient)
-        {
-            this.ingredients.Add(ingredient);
-        }
-
-        public List<Ingredient> GetIngredients()
-        {
-            return this.ingredients;
         }
     }
 }
