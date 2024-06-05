@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CookOff.Models
 {
-    public class Recipe
+    public class Recipe : INotifyPropertyChanged
     {
         public int RecipeID { get; set; }
         public string Name { get; set; }
@@ -11,8 +12,15 @@ namespace CookOff.Models
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public List<Step> Steps { get; set; } = new List<Step>();
 
-        public Recipe(string name, string imagePath, int rating)
+        public bool IsSelected { get; set; }
+
+        // Parameterless constructor for deserialization
+        public Recipe() { }
+
+        // Constructor with parameters for creating new recipes
+        public Recipe(int recipeID, string name, string imagePath, int rating)
         {
+            RecipeID = recipeID;
             Name = name;
             ImagePath = imagePath;
             Rating = rating;
@@ -26,6 +34,12 @@ namespace CookOff.Models
         public void AddStep(Step step)
         {
             Steps.Add(step);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -2,69 +2,48 @@
 
 namespace CookOff.Models
 {
-    // Ingredient model
     public class Ingredient
     {
-        private string name;
-        private string unit;
-        private double quantity;
+        public int RecipeID { get; set; }
+        public string Name { get; set; }
+        public string Unit { get; set; }
+        public double Quantity { get; set; }
 
-        public Ingredient(string name, string unit, double quantity)
+        public Ingredient() { }
+
+        public Ingredient(int recipeID, string name, string unit, double quantity)
         {
-            setName(name);
-            setUnit(unit);
-            setQuantity(quantity);
+            RecipeID = recipeID;
+            Name = name;
+            Unit = unit;
+            Quantity = quantity;
         }
 
-        public void setName(string name)
+        public void SetName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Name cannot be null or empty!");
             }
-            else
-            {
-                this.name = name;
-            }
+            this.Name = name;
         }
 
-        public string getName()
-        {
-            return this.name;
-        }
-
-        public void setUnit(string unit)
+        public void SetUnit(string unit)
         {
             if (string.IsNullOrEmpty(unit))
             {
                 throw new ArgumentException("Unit cannot be null or empty!");
             }
-            else
-            {
-                this.unit = unit;
-            }
+            this.Unit = unit;
         }
 
-        public string getUnit()
-        {
-            return this.unit;
-        }
-
-        public void setQuantity(double quantity)
+        public void SetQuantity(double quantity)
         {
             if (quantity <= 0)
             {
                 throw new ArgumentException("Quantity must be greater than zero!");
             }
-            else
-            {
-                this.quantity = quantity;
-            }
-        }
-
-        public double getQuantity()
-        {
-            return this.quantity;
+            this.Quantity = quantity;
         }
     }
 }

@@ -56,9 +56,9 @@ namespace CookOff.Utils
                 foreach (var ingredient in recipe.Ingredients)
                 {
                     csv.WriteField(recipe.RecipeID);
-                    csv.WriteField(ingredient.getName());
-                    csv.WriteField(ingredient.getUnit());
-                    csv.WriteField(ingredient.getQuantity());
+                    csv.WriteField(ingredient.Name);
+                    csv.WriteField(ingredient.Unit);
+                    csv.WriteField(ingredient.Quantity);
                     csv.NextRecord();
                 }
             }
@@ -79,9 +79,9 @@ namespace CookOff.Utils
                 foreach (var step in recipe.Steps)
                 {
                     csv.WriteField(recipe.RecipeID);
-                    csv.WriteField(step.getDescription());
-                    csv.WriteField(step.getTimerRequired());
-                    csv.WriteField(step.getTimer());
+                    csv.WriteField(step.Description);
+                    csv.WriteField(step.TimerRequired);
+                    csv.WriteField(step.Timer);
                     csv.NextRecord();
                 }
             }

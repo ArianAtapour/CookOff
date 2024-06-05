@@ -2,62 +2,44 @@
 
 namespace CookOff.Models
 {
-    // Step model
     public class Step
     {
-        private string description;
-        private bool timerRequired;
-        private TimeSpan timer;
+        public int RecipeID { get; set; }
+        public string Description { get; set; }
+        public bool TimerRequired { get; set; }
+        public TimeSpan Timer { get; set; }
 
-        public Step(string description, bool timerRequired, TimeSpan timer)
+        public Step() { }
+
+        public Step(int recipeID, string description, bool timerRequired, TimeSpan timer)
         {
-            setDescription(description);
-            setTimerRequired(timerRequired);
-            setTimer(timer);
+            RecipeID = recipeID;
+            Description = description;
+            TimerRequired = timerRequired;
+            Timer = timer;
         }
 
-        public void setDescription(string description)
+        public void SetDescription(string description)
         {
             if (string.IsNullOrEmpty(description))
             {
                 throw new ArgumentException("Description cannot be null or empty!");
             }
-            else
-            {
-                this.description = description;
-            }
+            this.Description = description;
         }
 
-        public string getDescription()
+        public void SetTimerRequired(bool timerRequired)
         {
-            return this.description;
+            this.TimerRequired = timerRequired;
         }
 
-        public void setTimerRequired(bool timerRequired)
-        {
-            this.timerRequired = timerRequired;
-        }
-
-        public bool getTimerRequired()
-        {
-            return this.timerRequired;
-        }
-
-        public void setTimer(TimeSpan timer)
+        public void SetTimer(TimeSpan timer)
         {
             if (timer < TimeSpan.Zero)
             {
                 throw new ArgumentException("Timer cannot be negative!");
             }
-            else
-            {
-                this.timer = timer;
-            }
-        }
-
-        public TimeSpan getTimer()
-        {
-            return this.timer;
+            this.Timer = timer;
         }
     }
 }

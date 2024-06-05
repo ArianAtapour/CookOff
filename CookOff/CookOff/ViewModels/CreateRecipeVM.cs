@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CookOff.Models;
 using CookOff.Utils;
+using CsvHelper.Configuration;
+using CsvHelper;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -149,7 +153,42 @@ namespace CookOff.ViewModels
             SubmitCommand = new Command(OnSubmit);
             BackCommand = new Command(OnBack);
             UploadImageCommand = new Command(async () => await OnUploadImage());
+
+            // Ensure RecipeCounter starts from the maximum RecipeID
+            string projectDir = GetProjectDirectory();
+            string recipesFilePath = Path.Combine(projectDir, "recipes.csv");
+            if (File.Exists(recipesFilePath))
+            {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = ",",
+                    HasHeaderRecord = true,
+                    MissingFieldFound = null,
+                    HeaderValidated = null
+                };
+
+                using (var reader = new StreamReader(recipesFilePath))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    csv.Context.RegisterClassMap<RecipeMap>();
+                    var recipeRecords = csv.GetRecords<Recipe>().ToList();
+                    if (recipeRecords.Any())
+                    {
+                        RecipeCounter = recipeRecords.Max(r => r.RecipeID) + 1;
+                    }
+                    else
+                    {
+                        RecipeCounter = 1; // Initialize to 1 if no recipes exist
+                    }
+                }
+            }
+            else
+            {
+                RecipeCounter = 1; // Initialize to 1 if the file does not exist
+            }
         }
+
+
 
         private void OnAddStep()
         {
@@ -230,20 +269,17 @@ namespace CookOff.ViewModels
                 return;
             }
 
-            var newRecipe = new Recipe(RecipeName, ImagePath, Rating)
-            {
-                RecipeID = RecipeCounter++
-            };
+            var newRecipe = new Recipe(RecipeCounter++, RecipeName, ImagePath, Rating);
 
             foreach (var stepVM in Steps)
             {
                 var timer = new TimeSpan(stepVM.Hours, stepVM.Minutes, stepVM.Seconds);
-                newRecipe.AddStep(new Step(stepVM.Description, stepVM.TimerRequired, timer));
+                newRecipe.AddStep(new Step(newRecipe.RecipeID, stepVM.Description, stepVM.TimerRequired, timer));
             }
 
             foreach (var ingredient in Ingredients)
             {
-                newRecipe.AddIngredient(new Ingredient(ingredient.Name, ingredient.Unit, double.Parse(ingredient.Quantity)));
+                newRecipe.AddIngredient(new Ingredient(newRecipe.RecipeID, ingredient.Name, ingredient.Unit, double.Parse(ingredient.Quantity)));
             }
 
             // Save the newRecipe object to CSV files
@@ -256,6 +292,7 @@ namespace CookOff.ViewModels
 
             await Shell.Current.GoToAsync("..");
         }
+
 
         private async void OnBack()
         {
@@ -295,15 +332,17 @@ namespace CookOff.ViewModels
                     }
 
                     // Update the image path
-                    ImagePath = newFilePath;
+                    ImagePath = newFilePath ?? throw new ArgumentNullException(nameof(newFilePath), "Image path cannot be null");
+                    Debug.WriteLine($"ImagePath set to: {ImagePath}");
                 }
             }
             catch (Exception ex)
             {
                 // Handle any exceptions, such as the user cancelling the file picker
-                Console.WriteLine($"File picking error: {ex.Message}");
+                Debug.WriteLine($"File picking error: {ex.Message}");
             }
         }
+
 
         private string GetProjectDirectory()
         {
@@ -320,3 +359,4 @@ namespace CookOff.ViewModels
         }
     }
 }
+

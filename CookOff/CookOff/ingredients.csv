@@ -1,7 +1,3 @@
 RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
-1,sugar,Liters (l),5
-1,salt,Milliliters (ml),2
-2,pepper,Grams (g),2
-2,love,Kilograms (kg),100
-1,sugar,Liters (l),2
-1,test,Milliliters (ml),10
+1,DNDSALT,Tablespoons (tbsp),2
+1,DNDPEPPER,Teaspoons (tsp),4
