@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CookOff.Models;
-using CookOff.Utils;  // Ensure this using directive is present
+using CookOff.Utils;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -80,6 +81,17 @@ namespace CookOff.ViewModels
             set
             {
                 _ingredientUnit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _validationMessage;
+        public string ValidationMessage
+        {
+            get { return _validationMessage; }
+            set
+            {
+                _validationMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -160,8 +172,64 @@ namespace CookOff.ViewModels
             }
         }
 
+        private bool ValidateRecipe()
+        {
+            if (string.IsNullOrWhiteSpace(RecipeName))
+            {
+                ValidationMessage = "Recipe Name is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(ImagePath))
+            {
+                ValidationMessage = "Image upload is required.";
+                return false;
+            }
+
+            if (Rating <= 0)
+            {
+                ValidationMessage = "Deliciousness Rating is required.";
+                return false;
+            }
+
+            if (Ingredients.Count == 0)
+            {
+                ValidationMessage = "At least one ingredient is required.";
+                return false;
+            }
+
+            if (Steps.Count == 0)
+            {
+                ValidationMessage = "At least one step is required.";
+                return false;
+            }
+
+            foreach (var step in Steps)
+            {
+                if (string.IsNullOrWhiteSpace(step.Description))
+                {
+                    ValidationMessage = "Step description is required.";
+                    return false;
+                }
+
+                if (step.TimerRequired && step.Hours == 0 && step.Minutes == 0 && step.Seconds == 0)
+                {
+                    ValidationMessage = "All timer values cannot be 0 if the baking timer option is selected.";
+                    return false;
+                }
+            }
+
+            ValidationMessage = string.Empty;
+            return true;
+        }
+
         private async void OnSubmit()
         {
+            if (!ValidateRecipe())
+            {
+                return;
+            }
+
             var newRecipe = new Recipe(RecipeName, ImagePath, Rating)
             {
                 RecipeID = RecipeCounter++

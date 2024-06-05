@@ -17,6 +17,8 @@
                HorizontalOptions="Center" 
                Padding="30,0,30,50" />
 
+            <Label Text="{Binding ValidationMessage}" TextColor="Red" FontAttributes="Bold" Margin="0,0,0,20" />
+
             <Entry BackgroundColor="#AC8968" Placeholder="Recipe Name" Text="{Binding RecipeName}" Margin="0,0,0,30"/>
             <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Upload Image" Command="{Binding UploadImageCommand}" />
             <Image Source="{Binding ImagePath}" MaximumHeightRequest="250" Margin="0,0,0,20" />
@@ -37,7 +39,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="5">
-                            <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding Name}" TextColor="Black" FontAttributes="Bold"/>
                             <Label Text="{Binding Quantity}" TextColor="Black"/>
                             <Label Text="{Binding Unit}" TextColor="Black"/>
                         </StackLayout>
@@ -50,10 +52,10 @@
                     <DataTemplate>
                         <StackLayout Padding="0,0,0,30" HorizontalOptions="CenterAndExpand">
                             <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10"/>
-                            <Entry Placeholder="Step Description" Text="{Binding Description}" WidthRequest="950" HeightRequest="150"/>
+                            <Entry Placeholder="Step Description" Text="{Binding Description}" WidthRequest="950" HeightRequest="150" TextColor="Black"/>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <CheckBox IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
-                                <Label Text="Add Baking Timer?" VerticalOptions="Center"/>
+                                <Label Text="Add Baking Timer?" VerticalOptions="Center" TextColor="Black"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout IsVisible="{Binding TimerRequired}" HorizontalOptions="Center">
                                 <Label Text="Set Timer:" VerticalOptions="Center" Padding="5,0,10,0"/>
