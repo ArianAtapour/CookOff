@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CookOff.ViewModels"
-             xmlns:behaviors="clr-namespace:CookOff.Behaviors"
              x:Class="CookOff.MainPage">
 
     <ContentPage.BindingContext>
@@ -12,7 +11,7 @@
     <StackLayout>
         <Button Text="Create Recipe" Command="{Binding NavigateToCreateRecipeCommand}" />
 
-        <CollectionView ItemsSource="{Binding Recipes}" SelectionMode="Single">
+        <CollectionView ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal">
@@ -25,9 +24,6 @@
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            <CollectionView.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding NavigateToRecipePageCommand}" CommandParameter="{Binding SelectedItem}" />
-            </CollectionView.Behaviors>
         </CollectionView>
 
         <Button Text="Delete Selected Recipes" Command="{Binding DeleteSelectedRecipesCommand}" />

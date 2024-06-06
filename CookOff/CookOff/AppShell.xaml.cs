@@ -1,12 +1,14 @@
-﻿namespace CookOff;
+﻿using Microsoft.Maui.Controls;
 
-public partial class AppShell : Shell
+namespace CookOff
 {
-    public AppShell()
+    public partial class AppShell : Shell
     {
-        InitializeComponent();
-        Routing.RegisterRoute("CreateRecipePage", typeof(CreateRecipePage));
-        Routing.RegisterRoute("RecipePage", typeof(RecipePage));
+        public AppShell()
+        {
+            InitializeComponent();
+            Routing.RegisterRoute("CreateRecipePage", typeof(CreateRecipePage));
+            Routing.RegisterRoute("RecipePage", typeof(RecipePage));
+        }
     }
 }
-

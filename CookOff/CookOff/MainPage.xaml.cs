@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using CookOff.ViewModels;
-using System.Diagnostics;
+using CookOff.Models;
+using System.Collections.Generic;
 
 namespace CookOff
 {
@@ -10,7 +11,25 @@ namespace CookOff
         {
             InitializeComponent();
             BindingContext = new MainPageVM();
-            Debug.WriteLine($"BindingContext set to MainPageVM with {((MainPageVM)BindingContext).Recipes.Count} recipes.");
+        }
+
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count > 0)
+            {
+                var selectedRecipe = e.CurrentSelection[0] as Recipe;
+                if (selectedRecipe != null)
+                {
+                    var navigationParameter = new Dictionary<string, object>
+                    {
+                        { "SelectedRecipe", selectedRecipe }
+                    };
+                    await Shell.Current.GoToAsync("RecipePage", navigationParameter);
+
+                    // Deselect item
+                    ((CollectionView)sender).SelectedItem = null;
+                }
+            }
         }
     }
 }
