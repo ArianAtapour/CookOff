@@ -1,13 +1,26 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CookOff.Models
 {
-    public class Ingredient
+    public class Ingredient : INotifyPropertyChanged
     {
         public int RecipeID { get; set; }
         public string Name { get; set; }
         public string Unit { get; set; }
         public double Quantity { get; set; }
+
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Ingredient() { }
 
@@ -44,6 +57,12 @@ namespace CookOff.Models
                 throw new ArgumentException("Quantity must be greater than zero!");
             }
             this.Quantity = quantity;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

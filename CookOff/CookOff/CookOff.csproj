@@ -39,7 +39,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
+		<CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
@@ -60,22 +60,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
+   		 <MauiAsset Include="Resources\Raw\timer_end.mp3" />
+	</ItemGroup>
+
+
+	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="32.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.6.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="ViewModels\" />
-	  <None Remove="Models\" />
+		<None Remove="ViewModels\" />
+		<None Remove="Models\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Models\" />
+		<Folder Include="Models\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <MauiXaml Update="RecipePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="RecipePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 </Project>

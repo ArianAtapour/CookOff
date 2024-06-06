@@ -12,11 +12,14 @@
         <Image Source="{Binding Recipe.ImagePath}" WidthRequest="200" HeightRequest="200" />
         <Label Text="{Binding Recipe.Name}" FontAttributes="Bold" FontSize="Large" Margin="0,10,0,0"/>
         <Label Text="{Binding Recipe.Rating}" FontSize="Medium" />
+
         <Label Text="Ingredients:" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0"/>
+        <Label Text="{Binding IngredientsCountLabel}" FontSize="Medium" TextColor="{Binding IngredientsCountColor}"/>
         <CollectionView ItemsSource="{Binding Recipe.Ingredients}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnIngredientCheckedChanged" />
                         <Label Text="{Binding Name}" />
                         <Label Text="{Binding Quantity}" />
                         <Label Text="{Binding Unit}" />
@@ -24,16 +27,26 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
         <Label Text="Steps:" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0"/>
+        <Label Text="{Binding StepsCountLabel}" FontSize="Medium" TextColor="{Binding StepsCountColor}"/>
         <CollectionView ItemsSource="{Binding Recipe.Steps}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical">
+                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnStepCheckedChanged" />
                         <Label Text="{Binding Description}" />
-                        <Label Text="{Binding Timer}" />
+                        <Label Text="{Binding Timer}" IsVisible="{Binding TimerRequired}" />
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding TimerRequired}">
+                            <Button Text="Start" Command="{Binding StartTimerCommand}" />
+                            <Button Text="Pause" Command="{Binding PauseTimerCommand}" />
+                            <Button Text="Stop" Command="{Binding StopTimerCommand}" />
+                        </StackLayout>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Button Text="Back" Command="{Binding BackCommand}" VerticalOptions="End" HorizontalOptions="Center" />
     </StackLayout>
 </ContentPage>
