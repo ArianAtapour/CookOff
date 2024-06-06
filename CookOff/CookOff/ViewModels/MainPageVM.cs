@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CookOff.Models;
 using CsvHelper;
@@ -9,11 +11,16 @@ using CsvHelper.Configuration;
 using Microsoft.Maui.Controls;
 using System.Globalization;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace CookOff.ViewModels
 {
     public class MainPageVM : INotifyPropertyChanged
     {
+        private FileSystemWatcher fileWatcher;
+        private DateTime lastRead = DateTime.MinValue;
+        private readonly TimeSpan debounceTime = TimeSpan.FromMilliseconds(500);
+
         private ObservableCollection<Recipe> recipes;
         public ObservableCollection<Recipe> Recipes
         {
@@ -36,6 +43,41 @@ namespace CookOff.ViewModels
             LoadStepsFromCsv();
             NavigateToCreateRecipeCommand = new Command(OnNavigateToCreateRecipe);
             DeleteSelectedRecipesCommand = new Command(OnDeleteSelectedRecipes);
+
+            InitializeFileWatcher();
+        }
+
+        private void InitializeFileWatcher()
+        {
+            string projectDir = GetProjectDirectory();
+            string recipesFilePath = Path.Combine(projectDir, "recipes.csv");
+
+            fileWatcher = new FileSystemWatcher
+            {
+                Path = Path.GetDirectoryName(recipesFilePath),
+                Filter = Path.GetFileName(recipesFilePath),
+                NotifyFilter = NotifyFilters.LastWrite
+            };
+
+            fileWatcher.Changed += OnCsvFileChanged;
+            fileWatcher.EnableRaisingEvents = true;
+        }
+
+        private async void OnCsvFileChanged(object sender, FileSystemEventArgs e)
+        {
+            var now = DateTime.Now;
+            if (now - lastRead < debounceTime)
+                return;
+
+            lastRead = now;
+            await Task.Delay(100); // Slight delay to ensure file write is complete
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                LoadRecipesFromCsv();
+                LoadIngredientsFromCsv();
+                LoadStepsFromCsv();
+            });
         }
 
         private async void OnNavigateToCreateRecipe()
@@ -65,6 +107,9 @@ namespace CookOff.ViewModels
 
                     var recipeRecords = csv.GetRecords<Recipe>().ToList();
 
+                    // Clear existing recipes before loading new ones
+                    Recipes.Clear();
+
                     // Ensure unique RecipeID
                     var existingIds = new HashSet<int>();
                     int maxId = recipeRecords.DefaultIfEmpty().Max(r => r?.RecipeID ?? 0);
@@ -75,7 +120,7 @@ namespace CookOff.ViewModels
                             recipe.RecipeID = ++maxId;
                         }
                         Recipes.Add(recipe);
-                        Debug.WriteLine($"Loaded recipe: {recipe.Name}, ImagePath: {recipe.ImagePath}, RecipeID: {recipe.RecipeID}");
+                        Debug.WriteLine($"Loaded recipe: {recipe.Name}, ImagePath: {recipe.ImagePath}");
                     }
 
                     Debug.WriteLine($"Loaded {Recipes.Count} recipes from CSV.");
@@ -86,7 +131,6 @@ namespace CookOff.ViewModels
                 Debug.WriteLine("Recipes CSV file not found.");
             }
         }
-
 
         private void LoadIngredientsFromCsv()
         {
@@ -107,8 +151,11 @@ namespace CookOff.ViewModels
                 using (var csv = new CsvReader(reader, config))
                 {
                     var ingredientRecords = csv.GetRecords<Ingredient>().ToList();
+
+                    // Clear existing ingredients for each recipe before loading new ones
                     foreach (var recipe in Recipes)
                     {
+                        recipe.Ingredients.Clear();
                         recipe.Ingredients.AddRange(ingredientRecords.Where(i => i.RecipeID == recipe.RecipeID));
                     }
 
@@ -140,8 +187,11 @@ namespace CookOff.ViewModels
                 using (var csv = new CsvReader(reader, config))
                 {
                     var stepRecords = csv.GetRecords<Step>().ToList();
+
+                    // Clear existing steps for each recipe before loading new ones
                     foreach (var recipe in Recipes)
                     {
+                        recipe.Steps.Clear();
                         recipe.Steps.AddRange(stepRecords.Where(s => s.RecipeID == recipe.RecipeID));
                     }
 
@@ -243,7 +293,6 @@ namespace CookOff.ViewModels
             }
         }
 
-
         private string GetProjectDirectory()
         {
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -252,7 +301,7 @@ namespace CookOff.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

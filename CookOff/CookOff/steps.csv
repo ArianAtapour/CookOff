@@ -1,3 +1,7 @@
 RecipeID,Step Description,Timer Required,Timer
 1,DNDS1,True,02:10:15
 1,DNDS2,False,00:00:00
+2,s1,True,04:01:00
+3,s1,True,03:10:00
+4,s1,True,05:00:00
+5,s1,False,00:00:00
