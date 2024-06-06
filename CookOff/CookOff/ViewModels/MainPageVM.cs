@@ -165,6 +165,8 @@ namespace CookOff.ViewModels
                 using (var reader = new StreamReader(ingredientsFilePath))
                 using (var csv = new CsvReader(reader, config))
                 {
+                    csv.Context.RegisterClassMap<IngredientMap>();
+
                     var ingredientRecords = csv.GetRecords<Ingredient>().ToList();
 
                     // Clear existing ingredients for each recipe before loading new ones
@@ -201,6 +203,8 @@ namespace CookOff.ViewModels
                 using (var reader = new StreamReader(stepsFilePath))
                 using (var csv = new CsvReader(reader, config))
                 {
+                    csv.Context.RegisterClassMap<StepMap>();
+
                     var stepRecords = csv.GetRecords<Step>().ToList();
 
                     // Clear existing steps for each recipe before loading new ones
@@ -222,14 +226,18 @@ namespace CookOff.ViewModels
         private void OnDeleteSelectedRecipes()
         {
             var selectedRecipes = Recipes.Where(r => r.IsSelected).ToList();
+            var selectedRecipeIds = selectedRecipes.Select(r => r.RecipeID).ToHashSet();
+
             foreach (var recipe in selectedRecipes)
             {
                 Recipes.Remove(recipe);
             }
 
             SaveRecipesToCsv();
-            SaveIngredientsToCsv();
-            SaveStepsToCsv();
+
+            // Remove ingredients and steps related to the selected recipes
+            RemoveIngredientsByRecipeIds(selectedRecipeIds);
+            RemoveStepsByRecipeIds(selectedRecipeIds);
         }
 
         private void SaveRecipesToCsv()
@@ -246,11 +254,12 @@ namespace CookOff.ViewModels
             using (var writer = new StreamWriter(recipesFilePath))
             using (var csv = new CsvWriter(writer, config))
             {
+                csv.Context.RegisterClassMap<RecipeMap>();
                 csv.WriteRecords(Recipes);
             }
         }
 
-        private void SaveIngredientsToCsv()
+        private void RemoveIngredientsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
             string ingredientsFilePath = Path.Combine(projectDir, "ingredients.csv");
@@ -261,25 +270,24 @@ namespace CookOff.ViewModels
                 HasHeaderRecord = true
             };
 
-            var remainingIngredients = Recipes.SelectMany(r => r.Ingredients).ToList();
+            var remainingIngredients = new List<Ingredient>();
+
+            using (var reader = new StreamReader(ingredientsFilePath))
+            using (var csv = new CsvReader(reader, config))
+            {
+                csv.Context.RegisterClassMap<IngredientMap>();
+                remainingIngredients = csv.GetRecords<Ingredient>().Where(i => !recipeIds.Contains(i.RecipeID)).ToList();
+            }
 
             using (var writer = new StreamWriter(ingredientsFilePath))
             using (var csv = new CsvWriter(writer, config))
             {
-                // Write header manually since we are not using the auto-generated header
-                writer.WriteLine("RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity");
-                foreach (var ingredient in remainingIngredients)
-                {
-                    csv.WriteField(ingredient.RecipeID);
-                    csv.WriteField(ingredient.Name);
-                    csv.WriteField(ingredient.Unit);
-                    csv.WriteField(ingredient.Quantity);
-                    csv.NextRecord();
-                }
+                csv.Context.RegisterClassMap<IngredientMap>();
+                csv.WriteRecords(remainingIngredients);
             }
         }
 
-        private void SaveStepsToCsv()
+        private void RemoveStepsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
             string stepsFilePath = Path.Combine(projectDir, "steps.csv");
@@ -290,21 +298,20 @@ namespace CookOff.ViewModels
                 HasHeaderRecord = true
             };
 
-            var remainingSteps = Recipes.SelectMany(r => r.Steps).ToList();
+            var remainingSteps = new List<Step>();
+
+            using (var reader = new StreamReader(stepsFilePath))
+            using (var csv = new CsvReader(reader, config))
+            {
+                csv.Context.RegisterClassMap<StepMap>();
+                remainingSteps = csv.GetRecords<Step>().Where(s => !recipeIds.Contains(s.RecipeID)).ToList();
+            }
 
             using (var writer = new StreamWriter(stepsFilePath))
             using (var csv = new CsvWriter(writer, config))
             {
-                // Write header manually since we are not using the auto-generated header
-                writer.WriteLine("RecipeID,Step Description,Timer Required,Timer");
-                foreach (var step in remainingSteps)
-                {
-                    csv.WriteField(step.RecipeID);
-                    csv.WriteField(step.Description);
-                    csv.WriteField(step.TimerRequired);
-                    csv.WriteField(step.Timer);
-                    csv.NextRecord();
-                }
+                csv.Context.RegisterClassMap<StepMap>();
+                csv.WriteRecords(remainingSteps);
             }
         }
 
@@ -315,20 +322,6 @@ namespace CookOff.ViewModels
             return projectDir;
         }
 
-        private async void OnNavigateToRecipePage(object parameter)
-        {
-            if (parameter is Recipe selectedRecipe)
-            {
-                var navigationParameter = new Dictionary<string, object>
-        {
-            { "SelectedRecipe", selectedRecipe }
-        };
-
-                await Shell.Current.GoToAsync("RecipePage", navigationParameter);
-            }
-        }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -336,4 +329,3 @@ namespace CookOff.ViewModels
         }
     }
 }
-

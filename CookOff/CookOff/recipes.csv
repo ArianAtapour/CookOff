@@ -1,3 +1,2 @@
-RecipeID,Name,ImagePath,Rating,IsSelected
-1,DNDREC,C:\Users\arian\Desktop\Repos\CookOff\CookOff\CookOff\images\vro.jpg,4,False
-5,NO DUPLICATE,C:\Users\arian\Desktop\Repos\CookOff\CookOff\CookOff\images\0048ba922adcd105d275ee8420fb5934.jpg,5,False
+RecipeID,Recipe Name,Image Path,Rating
+2,DNDREC,C:\Users\arian\Desktop\Repos\CookOff\CookOff\CookOff\images\vro.jpg,2
