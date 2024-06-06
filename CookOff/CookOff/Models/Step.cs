@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
-using Plugin.SimpleAudioPlayer;
+using Plugin.Maui.Audio;
 
 namespace CookOff.Models
 {
@@ -98,11 +99,29 @@ namespace CookOff.Models
             Timer = originalTimer; // Reset the timer to the original time
         }
 
-        private void PlaySound()
+        private async void PlaySound()
         {
-            var player = CrossSimpleAudioPlayer.Current;
-            player.Load("Resources/Raw/timer_end.mp3");
-            player.Play();
+            try
+            {
+                Debug.WriteLine("Attempting to play sound in PlaySound method");
+
+                // Directly create the audio player and play the sound
+                var audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Raw/timer_end.mp3"));
+
+                if (audioPlayer == null)
+                {
+                    Debug.WriteLine("AudioPlayer creation failed");
+                    return;
+                }
+
+                audioPlayer.Play();
+                Debug.WriteLine("Sound played");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in PlaySound method: {ex.Message}");
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
