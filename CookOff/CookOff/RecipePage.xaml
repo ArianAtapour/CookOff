@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CookOff.ViewModels"
+             x:Class="CookOff.RecipePage">
+
+    <ContentPage.BindingContext>
+        <local:RecipePageVM />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10">
+        <Image Source="{Binding Recipe.ImagePath}" WidthRequest="200" HeightRequest="200" />
+        <Label Text="{Binding Recipe.Name}" FontAttributes="Bold" FontSize="Large" Margin="0,10,0,0"/>
+        <Label Text="{Binding Recipe.Rating}" FontSize="Medium" />
+        <Label Text="Ingredients:" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0"/>
+        <CollectionView ItemsSource="{Binding Recipe.Ingredients}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Name}" />
+                        <Label Text="{Binding Quantity}" />
+                        <Label Text="{Binding Unit}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Steps:" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0"/>
+        <CollectionView ItemsSource="{Binding Recipe.Steps}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="{Binding Description}" />
+                        <Label Text="{Binding Timer}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

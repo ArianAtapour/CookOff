@@ -1,7 +1,4 @@
 RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
-1,DNDSALT,Tablespoons (tbsp),2
-1,DNDPEPPER,Teaspoons (tsp),4
-2,dsada,Liters (l),5
-3,sugar,Grams (g),4
-4,sugar,Milliliters (ml),4
-5,test,Liters (l),2
+1,,,0
+1,,,0
+5,,,0

@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CookOff.Models;
+using Microsoft.Maui.Controls;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Microsoft.Maui.Controls;
 using System.Globalization;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
+using System;
 
 namespace CookOff.ViewModels
 {
@@ -34,6 +34,7 @@ namespace CookOff.ViewModels
 
         public ICommand NavigateToCreateRecipeCommand { get; private set; }
         public ICommand DeleteSelectedRecipesCommand { get; private set; }
+        public ICommand NavigateToRecipePageCommand { get; private set; }
 
         public MainPageVM()
         {
@@ -43,6 +44,7 @@ namespace CookOff.ViewModels
             LoadStepsFromCsv();
             NavigateToCreateRecipeCommand = new Command(OnNavigateToCreateRecipe);
             DeleteSelectedRecipesCommand = new Command(OnDeleteSelectedRecipes);
+            NavigateToRecipePageCommand = new Command<Recipe>(OnNavigateToRecipePage);
 
             InitializeFileWatcher();
         }
@@ -83,6 +85,19 @@ namespace CookOff.ViewModels
         private async void OnNavigateToCreateRecipe()
         {
             await Shell.Current.GoToAsync("CreateRecipePage");
+        }
+
+        private async void OnNavigateToRecipePage(Recipe selectedRecipe)
+        {
+            if (selectedRecipe == null)
+                return;
+
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { "SelectedRecipe", selectedRecipe }
+            };
+
+            await Shell.Current.GoToAsync("RecipePage", navigationParameter);
         }
 
         private void LoadRecipesFromCsv()
@@ -300,6 +315,20 @@ namespace CookOff.ViewModels
             return projectDir;
         }
 
+        private async void OnNavigateToRecipePage(object parameter)
+        {
+            if (parameter is Recipe selectedRecipe)
+            {
+                var navigationParameter = new Dictionary<string, object>
+        {
+            { "SelectedRecipe", selectedRecipe }
+        };
+
+                await Shell.Current.GoToAsync("RecipePage", navigationParameter);
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -307,3 +336,4 @@ namespace CookOff.ViewModels
         }
     }
 }
+

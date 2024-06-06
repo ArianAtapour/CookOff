@@ -73,4 +73,9 @@
 	<ItemGroup>
 	  <Folder Include="Models\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Update="RecipePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>
