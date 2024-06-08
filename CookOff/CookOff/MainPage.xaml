@@ -12,9 +12,11 @@
 
     <ScrollView>
         <StackLayout>
+            
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100">
                 <Label Text="RECIPES" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
             </Frame>
+            
             <CollectionView WidthRequest="700" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="OnSelectionChanged" Margin="0,40,0,25">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

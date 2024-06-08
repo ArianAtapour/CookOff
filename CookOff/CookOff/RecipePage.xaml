@@ -12,13 +12,15 @@
 
     <ScrollView>
         <StackLayout>
+            
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100" Margin="0,0,0,20">
                 <Label Text="{Binding Recipe.Name}" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
             </Frame>
+            
             <Frame Padding="0" CornerRadius="100" WidthRequest="200" HeightRequest="200" Margin="0,0,10,7">
                 <Image Source="{Binding Recipe.ImagePath}" WidthRequest="200" HeightRequest="200" Aspect="AspectFill"/>
             </Frame>
-            
+
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label Text="Deliciousness Rating: " TextColor="#AC8968" FontSize="Medium" Margin="0,0,10,0"/>
                 <Label Text="{Binding Recipe.Rating}" TextColor="#AC8968" FontSize="Medium" />
@@ -71,6 +73,7 @@
             </Frame>
 
             <Button WidthRequest="600" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Back" Command="{Binding BackCommand}" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,0,0,20"/>
+            
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -9,6 +9,7 @@
     <ContentPage.BindingContext>
         <local:CreateRecipeVM />
     </ContentPage.BindingContext>
+    
     <ScrollView>
         <StackLayout>
 
@@ -49,9 +50,9 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Frame>
-            
+
             <Button BackgroundColor="#865D36" Text="Add Step" WidthRequest="300" BorderColor="Black" BorderWidth="1" Command="{Binding AddStepCommand}" Margin="0,20,0,20"/>
-            
+
             <CollectionView ItemsSource="{Binding Steps}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
