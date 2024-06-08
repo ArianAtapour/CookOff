@@ -3,73 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CookOff.ViewModels"
              x:Class="CookOff.CreateRecipePage"
-             BackgroundColor="#EEE2DC">
+             BackgroundColor="#EEE2DC"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <local:CreateRecipeVM />
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Padding="10">
+        <StackLayout>
 
-            <Label Text="Add Recipe"
-               FontSize="24"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" 
-               Padding="30,0,30,50" />
+            <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100">
+                <Label Text="NEW RECIPE" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </Frame>
 
-            <Label Text="{Binding ValidationMessage}" TextColor="Red" FontAttributes="Bold" Margin="0,0,0,20" />
+            <Label Text="{Binding ValidationMessage}" TextColor="Red" FontAttributes="Bold" Margin="0,40,0,20" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"/>
 
-            <Entry BackgroundColor="#AC8968" Placeholder="Recipe Name" Text="{Binding RecipeName}" Margin="0,0,0,30"/>
-            <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Upload Image" Command="{Binding UploadImageCommand}" />
+            <Entry BackgroundColor="#CABA9C" WidthRequest="500" Placeholder="Recipe Name" Text="{Binding RecipeName}" PlaceholderColor="Black" Margin="0,0,0,30"/>
+            <Button BackgroundColor="#865D36" WidthRequest="300" BorderColor="Black" BorderWidth="1" Text="Upload Image" Command="{Binding UploadImageCommand}" />
             <Image Source="{Binding ImagePath}" MaximumHeightRequest="250" Margin="0,0,0,20" />
 
-            <Picker Title="Deliciousness Rating" BackgroundColor="#AC8968" HeightRequest="70" ItemsSource="{Binding Ratings}" SelectedItem="{Binding Rating, Mode=TwoWay}" SelectedIndex="0" Margin="0,0,0,30"/>
+            <Picker WidthRequest="500" Title="Deliciousness Rating" BackgroundColor="#CABA9C" HeightRequest="70" ItemsSource="{Binding Ratings}" SelectedItem="{Binding Rating, Mode=TwoWay}" SelectedIndex="0" Margin="0,0,0,30"/>
 
             <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="0" HeightRequest="45" Margin="0,0,0,30">
-                <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Ingredient Name" Text="{Binding IngredientName}" Margin="0,0,20,0"/>
-                <Entry BackgroundColor="#AC8968" WidthRequest="300" Placeholder="Quantity" Text="{Binding IngredientQuantity}" Margin="0,0,20,0"/>
-                <Frame BackgroundColor="#AC8968" Margin="0" Padding="0">
+                <Entry BackgroundColor="#CABA9C" WidthRequest="300" Placeholder="Ingredient Name" PlaceholderColor="Black" Text="{Binding IngredientName}" Margin="0,0,20,0"/>
+                <Entry BackgroundColor="#CABA9C" WidthRequest="300" Placeholder="Quantity" PlaceholderColor="Black" Text="{Binding IngredientQuantity}" Margin="0,0,20,0"/>
+                <Frame BackgroundColor="#CABA9C" Margin="0" Padding="0">
                     <Picker WidthRequest="300" VerticalOptions="FillAndExpand" ItemsSource="{Binding IngredientUnits}" SelectedItem="{Binding IngredientUnit}" />
                 </Frame>
             </HorizontalStackLayout>
 
-            <Button BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
+            <Button BackgroundColor="#865D36" WidthRequest="300" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
 
-            <CollectionView ItemsSource="{Binding Ingredients}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Padding="5">
-                            <Label Text="{Binding Name}" TextColor="Black" FontAttributes="Bold"/>
-                            <Label Text="{Binding Quantity}" TextColor="Black"/>
-                            <Label Text="{Binding Unit}" TextColor="Black"/>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
+            <Frame BackgroundColor="#CABA9C" WidthRequest="950" Margin="0,20,0,0" VerticalOptions="Start" IsVisible="{Binding HasIngredients}">
+                <CollectionView ItemsSource="{Binding Ingredients}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Padding="0,7,0,7">
+                                <Label Text="{Binding Name}" TextColor="Black" FontAttributes="Bold"/>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Quantity}" TextColor="Black" Margin="0,0,5,0"/>
+                                    <Label Text="{Binding Unit}" TextColor="Black"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+            
+            <Button BackgroundColor="#865D36" Text="Add Step" WidthRequest="300" BorderColor="Black" BorderWidth="1" Command="{Binding AddStepCommand}" Margin="0,20,0,20"/>
+            
             <CollectionView ItemsSource="{Binding Steps}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="0,0,0,30" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10"/>
-                            <Entry Placeholder="Step Description" Text="{Binding Description}" WidthRequest="950" HeightRequest="150" TextColor="Black"/>
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold,Italic" TextColor="Black" Margin="0,10,0,10"/>
+                            <Entry Placeholder="Step Description" BackgroundColor="#CABA9C" Text="{Binding Description}" WidthRequest="950" HeightRequest="150" PlaceholderColor="Black" TextColor="Black"/>
                             <HorizontalStackLayout HorizontalOptions="Center">
-                                <CheckBox IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
+                                <CheckBox Color="#865D36" IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
                                 <Label Text="Add Baking Timer?" VerticalOptions="Center" TextColor="Black"/>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout IsVisible="{Binding TimerRequired}" HorizontalOptions="Center">
-                                <Label Text="Set Timer:" VerticalOptions="Center" Padding="5,0,10,0"/>
-                                <Entry BackgroundColor="#AC8968" Placeholder="HH" Keyboard="Numeric" Text="{Binding Hours}" WidthRequest="40" />
-                                <Entry BackgroundColor="#AC8968" Placeholder="MM" Keyboard="Numeric" Text="{Binding Minutes}" WidthRequest="40" />
-                                <Entry BackgroundColor="#AC8968" Placeholder="SS" Keyboard="Numeric" Text="{Binding Seconds}" WidthRequest="40" />
+                            <HorizontalStackLayout IsVisible="{Binding TimerRequired}" HorizontalOptions="CenterAndExpand">
+                                <Label Text="Set Timer:" VerticalOptions="Center" Padding="0,0,10,0"/>
+                                <Entry BackgroundColor="#CABA9C" Placeholder="HH" Keyboard="Numeric" Text="{Binding Hours}" WidthRequest="40" HorizontalTextAlignment="Center"/>
+                                <Entry BackgroundColor="#CABA9C" Placeholder="MM" Keyboard="Numeric" Text="{Binding Minutes}" WidthRequest="40" HorizontalTextAlignment="Center"/>
+                                <Entry BackgroundColor="#CABA9C" Placeholder="SS" Keyboard="Numeric" Text="{Binding Seconds}" WidthRequest="40" HorizontalTextAlignment="Center"/>
                             </HorizontalStackLayout>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <Button BackgroundColor="#865D36" Text="Add Step"  BorderColor="Black" BorderWidth="1" Command="{Binding AddStepCommand}" Margin="0,0,0,20"/>
-
+            
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
                 <Button BackgroundColor="#865D36" Text="Submit" BorderColor="Black" BorderWidth="1" Command="{Binding SubmitCommand}" WidthRequest="300" Margin="0,0,20,0"/>
                 <Button BackgroundColor="#865D36" Text="Back" BorderColor="Black" BorderWidth="1" Command="{Binding BackCommand}" WidthRequest="300"/>

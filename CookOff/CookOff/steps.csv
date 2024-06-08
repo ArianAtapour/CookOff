@@ -1,3 +1,20 @@
 RecipeID,Step Description,Timer Required,Timer
-2,DNDS1,True,00:00:05
-2,DNDS2,False,00:00:00
+5,Make the Tacos by frying the tortillas in the oil,True,00:02:00
+5,Season the minced beef with salt and pepper,False,00:00:00
+5,"Cook the beef and add the tomato paste to it ",True,00:10:00
+5,Add the beans and chillies and let them cook,True,00:03:00
+5,Fill the tacos with the beef and top it off with cheese,False,00:00:00
+6,Add small man to pot and cook till cooked,False,00:00:00
+7,Create the classes and give them names,False,00:00:00
+7,Add the attributes and methods for each class,False,00:00:00
+7,Connect the classes with the arrows,False,00:00:00
+7,Serve the class diagram to your professor to get a good grade,False,00:00:00
+8,Toast your burger buns,False,00:00:00
+8,Fry the bacon strips in oil,True,00:03:00
+8,"Cut the tomato into slices ",False,00:00:00
+8,Season your hamburger patties with salt and pepper and cook them to a doneness of your choice,True,00:07:00
+8,Spread mayonnaise on the burger buns,False,00:00:00
+8,"Add your tomato slices and lettuce to the base of the bun ",False,00:00:00
+8,Put your hamburger patty on top of the tomato slice and lettuce,False,00:00:00
+8,Add a slice of cheese on the patty and drop a few bacon slices on top of the cheese,False,00:00:00
+8,"Repeat steps 7 and 8 ",False,00:00:00
