@@ -72,8 +72,8 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Margin="0,0,0,20">
                 <Button BackgroundColor="#865D36" Text="Submit" BorderColor="Black" BorderWidth="1" Command="{Binding SubmitCommand}" WidthRequest="300" Margin="0,0,20,0"/>
                 <Button BackgroundColor="#865D36" Text="Back" BorderColor="Black" BorderWidth="1" Command="{Binding BackCommand}" WidthRequest="300"/>
             </HorizontalStackLayout>
