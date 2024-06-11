@@ -8,7 +8,6 @@ RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
 5,Cheese,Grams (g),50
 5,"Salt ",Teaspoons (tsp),5
 5,Pepper,Tablespoons (tbsp),5
-6,Small man,Pieces (pcs),1
 7,Classes,Pieces (pcs),13
 7,Attributes,Pieces (pcs),20
 7,Methods,Pieces (pcs),40
@@ -23,3 +22,6 @@ RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
 8,Hamburger Patties,Pieces (pcs),2
 8,"Salt ",Grams (g),3
 8,Pepper,Grams (g),3
+9,Small Man,Pieces (pcs),1
+9,Pepper,Grams (g),50
+9,Salt,Grams (g),50

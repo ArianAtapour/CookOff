@@ -331,8 +331,9 @@ namespace CookOff.ViewModels
                         await stream.CopyToAsync(newStream);
                     }
 
-                    // Update the image path
-                    ImagePath = newFilePath ?? throw new ArgumentNullException(nameof(newFilePath), "Image path cannot be null");
+                    // Save the relative path of the image
+                    string relativeImagePath = Path.GetRelativePath(projectDirectory, newFilePath);
+                    ImagePath = relativeImagePath ?? throw new ArgumentNullException(nameof(relativeImagePath), "Image path cannot be null");
                     Debug.WriteLine($"ImagePath set to: {ImagePath}");
                 }
             }

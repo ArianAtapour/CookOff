@@ -130,6 +130,12 @@ namespace CookOff.ViewModels
                     int maxId = recipeRecords.DefaultIfEmpty().Max(r => r?.RecipeID ?? 0);
                     foreach (var recipe in recipeRecords)
                     {
+                        // Add project directory to the image path
+                        if (!string.IsNullOrWhiteSpace(recipe.ImagePath))
+                        {
+                            recipe.ImagePath = Path.Combine(projectDir, recipe.ImagePath);
+                        }
+
                         if (!existingIds.Add(recipe.RecipeID))
                         {
                             recipe.RecipeID = ++maxId;
