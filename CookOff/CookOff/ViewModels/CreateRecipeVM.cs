@@ -100,6 +100,8 @@ namespace CookOff.ViewModels
             }
         }
 
+
+
         public ObservableCollection<int> Ratings { get; } = new ObservableCollection<int> { 1, 2, 3, 4, 5 };
 
         private ObservableCollection<string> _ingredientUnits;
@@ -141,6 +143,7 @@ namespace CookOff.ViewModels
         public ICommand SubmitCommand { get; private set; }
         public ICommand BackCommand { get; private set; }
         public ICommand UploadImageCommand { get; private set; }
+        public ICommand PickerShowHelpCommand { get; private set; }
 
         private int stepCount = 1;
 
@@ -153,6 +156,11 @@ namespace CookOff.ViewModels
             SubmitCommand = new Command(OnSubmit);
             BackCommand = new Command(OnBack);
             UploadImageCommand = new Command(async () => await OnUploadImage());
+            PickerShowHelpCommand = new Command(OnPickerShowHelp);
+
+            // Set default values for the pickers
+            Rating = Ratings.FirstOrDefault();
+            IngredientUnit = IngredientUnits.FirstOrDefault();
 
             // Ensure RecipeCounter starts from the maximum RecipeID
             string projectDir = GetProjectDirectory();
@@ -188,8 +196,17 @@ namespace CookOff.ViewModels
             }
         }
 
+        private string GetImagePath()
+        {
+            // Ensure the images directory exists in the project directory
+            string projectDirectory = GetProjectDirectory();
+            string imagesDirectory = Path.Combine(projectDirectory, "images");
+            string imageName = "Help.jpg"; // Change this to match your image file name
+            return Path.Combine(imagesDirectory, imageName);
+        }
 
-
+        public string HelpImageSource => GetImagePath();
+        
         private void OnAddStep()
         {
             Steps.Add(new StepVM($"Step {stepCount++}"));
@@ -209,6 +226,11 @@ namespace CookOff.ViewModels
                 IngredientQuantity = string.Empty;
                 IngredientUnit = string.Empty;
             }
+        }
+
+        private int SafeStringToInt(string value)
+        {
+            return int.TryParse(value, out var result) ? result : 0;
         }
 
         private bool ValidateRecipe()
@@ -251,7 +273,11 @@ namespace CookOff.ViewModels
                     return false;
                 }
 
-                if (step.TimerRequired && step.Hours == 0 && step.Minutes == 0 && step.Seconds == 0)
+                int hours = SafeStringToInt(step.Hours);
+                int minutes = SafeStringToInt(step.Minutes);
+                int seconds = SafeStringToInt(step.Seconds);
+
+                if (step.TimerRequired && hours == 0 && minutes == 0 && seconds == 0)
                 {
                     ValidationMessage = "All timer values cannot be 0 if the baking timer option is selected.";
                     return false;
@@ -273,7 +299,11 @@ namespace CookOff.ViewModels
 
             foreach (var stepVM in Steps)
             {
-                var timer = new TimeSpan(stepVM.Hours, stepVM.Minutes, stepVM.Seconds);
+                int hours = SafeStringToInt(stepVM.Hours);
+                int minutes = SafeStringToInt(stepVM.Minutes);
+                int seconds = SafeStringToInt(stepVM.Seconds);
+
+                var timer = new TimeSpan(hours, minutes, seconds);
                 newRecipe.AddStep(new Step(newRecipe.RecipeID, stepVM.Description, stepVM.TimerRequired, timer));
             }
 
@@ -357,6 +387,12 @@ namespace CookOff.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private async void OnPickerShowHelp()
+        {
+            // Display a message indicating the purpose of the picker
+            await App.Current.MainPage.DisplayAlert("Help", "This picker is a dropdown menu for different kinds of measurement units.", "OK");
         }
     }
 }

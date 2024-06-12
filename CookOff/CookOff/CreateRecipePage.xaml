@@ -9,7 +9,7 @@
     <ContentPage.BindingContext>
         <local:CreateRecipeVM />
     </ContentPage.BindingContext>
-    
+
     <ScrollView>
         <StackLayout>
 
@@ -27,10 +27,15 @@
 
             <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="0" HeightRequest="45" Margin="0,0,0,30">
                 <Entry BackgroundColor="#CABA9C" WidthRequest="300" Placeholder="Ingredient Name" PlaceholderColor="Black" Text="{Binding IngredientName}" Margin="0,0,20,0"/>
-                <Entry BackgroundColor="#CABA9C" WidthRequest="300" Placeholder="Quantity" PlaceholderColor="Black" Text="{Binding IngredientQuantity}" Margin="0,0,20,0"/>
+                <Entry BackgroundColor="#CABA9C" WidthRequest="300" Placeholder="Quantity" PlaceholderColor="Black" Text="{Binding IngredientQuantity}" Margin="0,0,20,0" TextChanged="OnQuantityTextChanged"/>
                 <Frame BackgroundColor="#CABA9C" Margin="0" Padding="0">
                     <Picker WidthRequest="300" VerticalOptions="FillAndExpand" ItemsSource="{Binding IngredientUnits}" SelectedItem="{Binding IngredientUnit}" />
                 </Frame>
+                <Image Source="{Binding HelpImageSource}" WidthRequest="40" HeightRequest="20" VerticalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PickerShowHelpCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
             </HorizontalStackLayout>
 
             <Button BackgroundColor="#865D36" WidthRequest="300" BorderColor="Black" BorderWidth="1" Text="Add Ingredients" Command="{Binding AddIngredientsCommand}"/>
@@ -57,17 +62,24 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="0,0,0,30" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold,Italic" TextColor="Black" Margin="0,10,0,10"/>
+                            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold,Italic" TextColor="Black" Margin="20,10,0,10"/>
+                                <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding StepShowHelpCommand}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </HorizontalStackLayout>
                             <Entry Placeholder="Step Description" BackgroundColor="#CABA9C" Text="{Binding Description}" WidthRequest="950" HeightRequest="150" PlaceholderColor="Black" TextColor="Black"/>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <CheckBox Color="#865D36" IsChecked="{Binding TimerRequired}" VerticalOptions="Center"/>
-                                <Label Text="Add Baking Timer?" VerticalOptions="Center" TextColor="Black"/>
+                                <Label Text="Add Cooking Timer?" VerticalOptions="Center" TextColor="Black"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout IsVisible="{Binding TimerRequired}" HorizontalOptions="CenterAndExpand">
                                 <Label Text="Set Timer:" VerticalOptions="Center" Padding="0,0,10,0"/>
-                                <Entry BackgroundColor="#CABA9C" Placeholder="HH" Keyboard="Numeric" Text="{Binding Hours}" WidthRequest="40" HorizontalTextAlignment="Center"/>
-                                <Entry BackgroundColor="#CABA9C" Placeholder="MM" Keyboard="Numeric" Text="{Binding Minutes}" WidthRequest="40" HorizontalTextAlignment="Center"/>
-                                <Entry BackgroundColor="#CABA9C" Placeholder="SS" Keyboard="Numeric" Text="{Binding Seconds}" WidthRequest="40" HorizontalTextAlignment="Center"/>
+                                <Entry BackgroundColor="#CABA9C" Placeholder="HH" PlaceholderColor="Black" Keyboard="Numeric" Text="{Binding Hours}" WidthRequest="40" HorizontalTextAlignment="Center" TextChanged="OnHoursTextChanged" />
+                                <Entry BackgroundColor="#CABA9C" Placeholder="MM" PlaceholderColor="Black" Keyboard="Numeric" Text="{Binding Minutes}" WidthRequest="40" HorizontalTextAlignment="Center" TextChanged="OnMinutesTextChanged" />
+                                <Entry BackgroundColor="#CABA9C" Placeholder="SS" PlaceholderColor="Black" Keyboard="Numeric" Text="{Binding Seconds}" WidthRequest="40" HorizontalTextAlignment="Center" TextChanged="OnSecondsTextChanged" />
                             </HorizontalStackLayout>
                         </StackLayout>
                     </DataTemplate>

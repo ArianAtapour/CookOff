@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace CookOff.ViewModels
 {
@@ -8,18 +9,20 @@ namespace CookOff.ViewModels
         private string name;
         private string description;
         private bool timerRequired;
-        private int hours;
-        private int minutes;
-        private int seconds;
+        private string hours;
+        private string minutes;
+        private string seconds;
+        public ICommand StepShowHelpCommand { get; private set; }
 
         public StepVM(string name)
         {
             this.name = name;
             Description = string.Empty;
             TimerRequired = false;
-            Hours = 0;
-            Minutes = 0;
-            Seconds = 0;
+            Hours = string.Empty;
+            Minutes = string.Empty;
+            Seconds = string.Empty;
+            StepShowHelpCommand = new Command(OnStepShowHelp);
         }
 
         public string Name
@@ -52,7 +55,7 @@ namespace CookOff.ViewModels
             }
         }
 
-        public int Hours
+        public string Hours
         {
             get => hours;
             set
@@ -62,7 +65,7 @@ namespace CookOff.ViewModels
             }
         }
 
-        public int Minutes
+        public string Minutes
         {
             get => minutes;
             set
@@ -72,7 +75,7 @@ namespace CookOff.ViewModels
             }
         }
 
-        public int Seconds
+        public string Seconds
         {
             get => seconds;
             set
@@ -87,5 +90,30 @@ namespace CookOff.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private async void OnStepShowHelp()
+        {
+            // Display a message indicating the purpose of each step
+            await App.Current.MainPage.DisplayAlert("Help", "This is where you can describe the current step in detail.", "OK");
+        }
+
+        private string GetProjectDirectory()
+        {
+            // Assuming the application runs from the bin directory, we can navigate up to the project directory
+            var currentDir = AppDomain.CurrentDomain.BaseDirectory;
+            var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
+            return projectDir;
+        }
+
+        private string GetImagePath()
+        {
+            // Ensure the images directory exists in the project directory
+            string projectDirectory = GetProjectDirectory();
+            string imagesDirectory = Path.Combine(projectDirectory, "images");
+            string imageName = "Help.jpg"; // Change this to match your image file name
+            return Path.Combine(imagesDirectory, imageName);
+        }
+
+        public string HelpImageSource => GetImagePath();
     }
 }

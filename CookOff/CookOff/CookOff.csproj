@@ -74,11 +74,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="images\Help.jpg" />
 		<None Remove="ViewModels\" />
 		<None Remove="Models\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Models\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="images\Help.jpg" />
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="RecipePage.xaml">

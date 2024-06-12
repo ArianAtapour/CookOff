@@ -229,8 +229,20 @@ namespace CookOff.ViewModels
             }
         }
 
-        private void OnDeleteSelectedRecipes()
+        private async void OnDeleteSelectedRecipes()
         {
+            bool isConfirmed = await App.Current.MainPage.DisplayAlert(
+                "Confirm Delete",
+                "Are you sure you want to delete the selected recipes?",
+                "Yes",
+                "No"
+            );
+
+            if (!isConfirmed)
+            {
+                return;
+            }
+
             var selectedRecipes = Recipes.Where(r => r.IsSelected).ToList();
             var selectedRecipeIds = selectedRecipes.Select(r => r.RecipeID).ToHashSet();
 
