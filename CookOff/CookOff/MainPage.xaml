@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CookOff.ViewModels"
              x:Class="CookOff.MainPage"
@@ -12,10 +11,12 @@
 
     <ScrollView>
         <StackLayout>
-            
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100">
                 <Label Text="RECIPES" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
             </Frame>
+
+            <!-- Sort Picker -->
+            <Picker TitleColor="Black" Title="Sort By" WidthRequest="500" BackgroundColor="#865D36"  TextColor="White" SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Margin="0,20,0,10"/>
 
             <CollectionView WidthRequest="700" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="OnSelectionChanged" Margin="0,40,0,25">
                 <CollectionView.ItemTemplate>
@@ -36,6 +37,10 @@
                                         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="Start">
                                             <Label Text="Deliciousness Rating: " TextColor="Black" FontAttributes="Italic" Margin="15,0,10,0"/>
                                             <Label Text="{Binding Rating}" TextColor="Black" FontAttributes="Italic"/>
+                                            <Label Text="Completions: " TextColor="Black" FontAttributes="Italic" Margin="15,0,10,0"/>
+                                            <Label Text="{Binding UserRatings.Count}" TextColor="Black" FontAttributes="Italic"/>
+                                            <Label Text="User rating: " TextColor="Black" FontAttributes="Italic" Margin="15,0,10,0"/>
+                                            <Label Text="{Binding AverageRating}" TextColor="Black" FontAttributes="Italic"/>
                                         </StackLayout>
                                     </VerticalStackLayout>
                                     <CheckBox IsChecked="{Binding IsSelected}" Color="#865D36" VerticalOptions="Center" HorizontalOptions="Center" Margin="10,0,0,0" Grid.Column="2"/>
@@ -50,7 +55,6 @@
                 <Button WidthRequest="500" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Create Recipe" Command="{Binding NavigateToCreateRecipeCommand}" Margin="0,0,15,0"/>
                 <Button WidthRequest="500" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Delete Selected Recipes" Command="{Binding DeleteSelectedRecipesCommand}" />
             </HorizontalStackLayout>
-
         </StackLayout>
     </ScrollView>
 </ContentPage>

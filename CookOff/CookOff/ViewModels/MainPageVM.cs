@@ -31,14 +31,37 @@ namespace CookOff.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<string> SortOptions { get; set; }
+        private string _selectedSortOption;
+
+        public string SelectedSortOption
+        {
+            get => _selectedSortOption;
+            set
+            {
+                if (_selectedSortOption != value)
+                {
+                    _selectedSortOption = value;
+                    OnPropertyChanged(nameof(SelectedSortOption));
+                    SortRecipes();
+                }
+            }
+        }
 
         public ICommand NavigateToCreateRecipeCommand { get; private set; }
         public ICommand DeleteSelectedRecipesCommand { get; private set; }
         public ICommand NavigateToRecipePageCommand { get; private set; }
 
+
         public MainPageVM()
         {
             Recipes = new ObservableCollection<Recipe>();
+            SortOptions = new ObservableCollection<string>
+            {
+                "Name",
+                "Average User Rating",
+                "Deliciousness Rating"
+            };
             LoadRecipesFromCsv();
             LoadIngredientsFromCsv();
             LoadStepsFromCsv();
@@ -64,6 +87,23 @@ namespace CookOff.ViewModels
 
             fileWatcher.Changed += OnCsvFileChanged;
             fileWatcher.EnableRaisingEvents = true;
+        }
+
+        private void SortRecipes()
+        {
+            switch (SelectedSortOption)
+            {
+                case "Name":
+                    Recipes = new ObservableCollection<Recipe>(Recipes.OrderBy(r => r.Name));
+                    break;
+                case "Average User Rating":
+                    Recipes = new ObservableCollection<Recipe>(Recipes.OrderByDescending(r => r.AverageRating));
+                    break;
+                case "Deliciousness Rating":
+                    Recipes = new ObservableCollection<Recipe>(Recipes.OrderByDescending(r => r.Rating));
+                    break;
+            }
+            OnPropertyChanged(nameof(Recipes));
         }
 
         private async void OnCsvFileChanged(object sender, FileSystemEventArgs e)
