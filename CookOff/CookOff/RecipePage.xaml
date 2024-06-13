@@ -26,6 +26,14 @@
                 <Label Text="{Binding Recipe.Rating}" TextColor="#AC8968" FontSize="Medium" />
             </HorizontalStackLayout>
 
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="{Binding UserRatingsLabel}" TextColor="#AC8968" FontSize="Medium" Margin="0,0,10,0"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="{Binding UserRatingAverageLabel}" TextColor="#AC8968" FontSize="Medium" Margin="0,0,10,0"/>
+            </HorizontalStackLayout>
+
             <Frame WidthRequest="800" BackgroundColor="#CABA9C" BorderColor="Black" Margin="10,20,10,10" Padding="10">
                 <StackLayout HorizontalOptions="CenterAndExpand">
                     <Label Text="{Binding IngredientsCountLabel}" FontSize="Medium" TextColor="{Binding IngredientsCountColor}" Margin="0,0,0,10"/>

@@ -86,5 +86,33 @@ namespace CookOff.Utils
                 }
             }
         }
+
+        //Save ratings
+        public static void AppendRatingToCsv(string ratingsFilePath, int recipeId, int userRating)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ",",
+                HasHeaderRecord = false
+            };
+
+            bool ratingsFileExists = File.Exists(ratingsFilePath);
+
+            // Save ratings
+            using (var writer = new StreamWriter(ratingsFilePath, append: true))
+            using (var csv = new CsvWriter(writer, config))
+            {
+                if (!ratingsFileExists)
+                {
+                    csv.WriteField("RecipeID");
+                    csv.WriteField("User Rating");
+                    csv.NextRecord();
+                }
+
+                csv.WriteField(recipeId);
+                csv.WriteField(userRating);
+                csv.NextRecord();
+            }
+        }
     }
 }

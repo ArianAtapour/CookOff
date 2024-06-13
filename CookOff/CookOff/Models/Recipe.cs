@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace CookOff.Models
 {
@@ -11,6 +12,33 @@ namespace CookOff.Models
         public int Rating { get; set; }
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public List<Step> Steps { get; set; } = new List<Step>();
+
+        private List<int> userRatings = new List<int>();  // Store all user ratings
+
+        public List<int> UserRatings
+        {
+            get => userRatings;
+            set
+            {
+                userRatings = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(AverageRating));
+            }
+        }
+
+        public double AverageRating => CalculateAverageRating();
+
+        private double CalculateAverageRating()
+        {
+            if (UserRatings.Any())
+            {
+                return UserRatings.Average();
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public bool IsSelected { get; set; }
 

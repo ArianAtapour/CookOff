@@ -42,6 +42,7 @@ namespace CookOff.ViewModels
             LoadRecipesFromCsv();
             LoadIngredientsFromCsv();
             LoadStepsFromCsv();
+            LoadRatingsFromCsv();
             NavigateToCreateRecipeCommand = new Command(OnNavigateToCreateRecipe);
             DeleteSelectedRecipesCommand = new Command(OnDeleteSelectedRecipes);
             NavigateToRecipePageCommand = new Command<Recipe>(OnNavigateToRecipePage);
@@ -79,6 +80,7 @@ namespace CookOff.ViewModels
                 LoadRecipesFromCsv();
                 LoadIngredientsFromCsv();
                 LoadStepsFromCsv();
+                LoadRatingsFromCsv();
             });
         }
 
@@ -229,6 +231,61 @@ namespace CookOff.ViewModels
             }
         }
 
+        public void LoadRatingsFromCsv()
+        {
+            Debug.WriteLine("Loading ratings");
+            string projectDir = GetProjectDirectory();
+            string ratingsFilePath = Path.Combine(projectDir, "ratings.csv");
+            var ratingRecords = new List<(int RecipeID, int UserRating)>();
+
+            if (File.Exists(ratingsFilePath))
+            {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = ",",
+                    HasHeaderRecord = true,
+                    MissingFieldFound = null,
+                    HeaderValidated = null
+                };
+
+                using (var reader = new StreamReader(ratingsFilePath))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    try
+                    {
+                        csv.Read();
+                        csv.ReadHeader();
+
+                        while (csv.Read())
+                        {
+                            int recipeId = csv.GetField<int>("RecipeID");
+                            int userRating = csv.GetField<int>("User Rating");
+
+                            ratingRecords.Add((recipeId, userRating));
+                        }
+                        foreach (var recipe in Recipes)
+                        {
+                            recipe.UserRatings.Clear();
+                            var ratingsForRecipe = ratingRecords.Where(r => r.RecipeID == recipe.RecipeID)
+                                                                .Select(r => r.UserRating)
+                                                                .ToList();
+
+                            recipe.UserRatings.AddRange(ratingsForRecipe);
+                        }
+                        Debug.WriteLine($"Loaded ratings from CSV: {ratingRecords.Count} records.");
+                    }
+                    catch (CsvHelperException ex)
+                    {
+                        Debug.WriteLine($"Error reading CSV record: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Ratings CSV file not found.");
+            }
+        }
+
         private async void OnDeleteSelectedRecipes()
         {
             bool isConfirmed = await App.Current.MainPage.DisplayAlert(
@@ -256,6 +313,7 @@ namespace CookOff.ViewModels
             // Remove ingredients and steps related to the selected recipes
             RemoveIngredientsByRecipeIds(selectedRecipeIds);
             RemoveStepsByRecipeIds(selectedRecipeIds);
+            RemoveRatingsByRecipeIds(selectedRecipeIds);
         }
 
         private void SaveRecipesToCsv()
@@ -277,6 +335,51 @@ namespace CookOff.ViewModels
             }
         }
 
+        private void RemoveRatingsByRecipeIds(HashSet<int> recipeIds)
+        {
+            string projectDir = GetProjectDirectory();
+            string ratingsFilePath = Path.Combine(projectDir, "ratings.csv");
+
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ",",
+                HasHeaderRecord = true
+            };
+
+            var remainingRows = new List<string>();
+
+            // Read the CSV file and filter out ratings with the specified RecipeIDs
+            using (var reader = new StreamReader(ratingsFilePath))
+            using (var csv = new CsvParser(reader, config))
+            {
+                bool isFirstRow = true;
+                while (csv.Read())
+                {
+                    if (isFirstRow)
+                    {
+                        // Add header row to the remaining rows
+                        remainingRows.Add(string.Join(",", csv.Record));
+                        isFirstRow = false;
+                        continue;
+                    }
+
+                    int recipeID = int.Parse(csv.Record[0]);
+                    if (!recipeIds.Contains(recipeID))
+                    {
+                        remainingRows.Add(string.Join(",", csv.Record));
+                    }
+                }
+            }
+
+            // Write the remaining rows back to the CSV file
+            using (var writer = new StreamWriter(ratingsFilePath))
+            {
+                foreach (var row in remainingRows)
+                {
+                    writer.WriteLine(row);
+                }
+            }
+        }
         private void RemoveIngredientsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
