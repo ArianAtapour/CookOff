@@ -24,6 +24,7 @@ namespace CookOff.ViewModels
                 recipe = value;
                 OnPropertyChanged();
                 UpdateCounts();
+                AssignStepNumbers();
             }
         }
 
@@ -82,7 +83,16 @@ namespace CookOff.ViewModels
                 await ShowRatingMessageBox();
             }
         }
-
+         
+        private void AssignStepNumbers()
+        {
+            var stepNumber = 0;
+            foreach (var step in Recipe.Steps)
+            {
+                step.StepNumber = "Step " + (stepNumber + 1).ToString() + ":";
+                stepNumber++;
+            }
+        }
         private async Task ShowRatingMessageBox()
         {
             ResetCheckBoxes();

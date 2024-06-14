@@ -19,6 +19,7 @@ namespace CookOff.Models
         public int RecipeID { get; set; }
         public string Description { get; set; }
         public bool TimerRequired { get; set; }
+        public string StepNumber { get; set; }
         public TimeSpan Timer
         {
             get => timer;

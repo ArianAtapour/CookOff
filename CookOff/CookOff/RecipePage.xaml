@@ -65,6 +65,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <HorizontalStackLayout>
                                         <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnStepCheckedChanged" />
+                                        <Label Text="{Binding StepNumber}" VerticalOptions="CenterAndExpand" />
                                         <Label Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
                                     </HorizontalStackLayout>
                                     <Label Text="{Binding Timer}" IsVisible="{Binding TimerRequired}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
