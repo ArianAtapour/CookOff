@@ -14,7 +14,14 @@
         <StackLayout>
 
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100">
-                <Label Text="NEW RECIPE" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                    <Label Text="NEW RECIPE" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CreateRecipeShowHelpCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
             </Frame>
 
             <Label Text="{Binding ValidationMessage}" TextColor="Red" FontAttributes="Bold" Margin="0,40,0,20" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"/>

@@ -54,12 +54,14 @@ namespace CookOff.ViewModels
         public ICommand BackCommand { get; }
         public ICommand UpdateIngredientsCountCommand { get; }
         public ICommand UpdateStepsCountCommand { get; }
+        public ICommand RecipeViewShowHelpCommand { get; private set; }
 
         public RecipePageVM()
         {
             BackCommand = new Command(OnBack);
             UpdateIngredientsCountCommand = new Command(UpdateIngredientsCount);
             UpdateStepsCountCommand = new Command(UpdateStepsCount);
+            RecipeViewShowHelpCommand = new Command(OnRecipeViewShowHelp);
         }
 
         private void OnBack()
@@ -89,7 +91,7 @@ namespace CookOff.ViewModels
             var stepNumber = 0;
             foreach (var step in Recipe.Steps)
             {
-                step.StepNumber = "Step " + (stepNumber + 1).ToString() + ":";
+                step.StepNumber = "Step " + (stepNumber + 1).ToString();
                 stepNumber++;
             }
         }
@@ -156,6 +158,23 @@ namespace CookOff.ViewModels
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
             var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
             return projectDir;
+        }
+
+        private string GetImagePath()
+        {
+            // Ensure the images directory exists in the project directory
+            string projectDirectory = GetProjectDirectory();
+            string imagesDirectory = Path.Combine(projectDirectory, "images");
+            string imageName = "Help.jpg"; // Change this to match your image file name
+            return Path.Combine(imagesDirectory, imageName);
+        }
+
+        public string HelpImageSource => GetImagePath();
+
+        private async void OnRecipeViewShowHelp()
+        {
+            // Display a message indicating the purpose of the recipe details page
+            await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Details Page! \n\nHere you can find detailed instructions and ingredients for the selected recipe. \n\nBrowse through the steps and gather all necessary ingredients to start cooking your dish!", "OK");
         }
     }
 }

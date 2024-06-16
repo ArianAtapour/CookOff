@@ -12,11 +12,18 @@
     <ScrollView>
         <StackLayout>
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100">
-                <Label Text="RECIPES" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                    <Label Text="RECIPES" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OnMainPageShowHelpCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
             </Frame>
 
             <!-- Sort Picker -->
-            <Picker TitleColor="Black" Title="Sort By" WidthRequest="500" BackgroundColor="#865D36"  TextColor="White" SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Margin="0,20,0,10"/>
+            <Picker TitleColor="Black" Title="Sort by:" WidthRequest="300" BackgroundColor="#CABA9C" SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Margin="0,30,0,0"/>
 
             <CollectionView WidthRequest="700" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="OnSelectionChanged" Margin="0,40,0,25">
                 <CollectionView.ItemTemplate>

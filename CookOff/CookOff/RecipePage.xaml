@@ -12,11 +12,18 @@
 
     <ScrollView>
         <StackLayout>
-            
+
             <Frame CornerRadius="0" BackgroundColor="#93785B" HeightRequest="100" Margin="0,0,0,20">
-                <Label Text="{Binding Recipe.Name}" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                    <Label Text="{Binding Recipe.Name}" TextColor="Black" FontSize="Header" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RecipeViewShowHelpCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
             </Frame>
-            
+
             <Frame Padding="0" CornerRadius="100" WidthRequest="200" HeightRequest="200" Margin="0,0,10,7">
                 <Image Source="{Binding Recipe.ImagePath}" WidthRequest="200" HeightRequest="200" Aspect="AspectFill"/>
             </Frame>
@@ -32,6 +39,11 @@
 
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label Text="{Binding UserRatingAverageLabel}" TextColor="#AC8968" FontSize="Medium" Margin="0,0,10,0"/>
+                <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding StepShowHelpCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
             </HorizontalStackLayout>
 
             <Frame WidthRequest="800" BackgroundColor="#CABA9C" BorderColor="Black" Margin="10,20,10,10" Padding="10">
@@ -41,7 +53,7 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Orientation="Horizontal">
-                                    <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnIngredientCheckedChanged"/>
+                                    <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnIngredientCheckedChanged" Margin="0,0,0,6"/>
                                     <VerticalStackLayout VerticalOptions="CenterAndExpand">
                                         <Label Text="{Binding Name}" />
                                         <HorizontalStackLayout VerticalOptions="CenterAndExpand">
@@ -64,9 +76,11 @@
                             <DataTemplate>
                                 <StackLayout Orientation="Vertical">
                                     <HorizontalStackLayout>
-                                        <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnStepCheckedChanged" />
-                                        <Label Text="{Binding StepNumber}" VerticalOptions="CenterAndExpand" />
-                                        <Label Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
+                                        <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnStepCheckedChanged" Margin="0,0,0,10" />
+                                        <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                            <Label Text="{Binding StepNumber}" VerticalOptions="CenterAndExpand" FontAttributes="Bold" />
+                                            <Label Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
+                                        </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     <Label Text="{Binding Timer}" IsVisible="{Binding TimerRequired}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
                                     <StackLayout Orientation="Horizontal" IsVisible="{Binding TimerRequired}" HorizontalOptions="CenterAndExpand" Margin="0,12,0,5">
@@ -82,7 +96,7 @@
             </Frame>
 
             <Button WidthRequest="600" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Back" Command="{Binding BackCommand}" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,0,0,20"/>
-            
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

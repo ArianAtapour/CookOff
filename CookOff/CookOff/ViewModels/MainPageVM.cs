@@ -51,6 +51,7 @@ namespace CookOff.ViewModels
         public ICommand NavigateToCreateRecipeCommand { get; private set; }
         public ICommand DeleteSelectedRecipesCommand { get; private set; }
         public ICommand NavigateToRecipePageCommand { get; private set; }
+        public ICommand OnMainPageShowHelpCommand { get; private set; }
 
 
         public MainPageVM()
@@ -69,6 +70,7 @@ namespace CookOff.ViewModels
             NavigateToCreateRecipeCommand = new Command(OnNavigateToCreateRecipe);
             DeleteSelectedRecipesCommand = new Command(OnDeleteSelectedRecipes);
             NavigateToRecipePageCommand = new Command<Recipe>(OnNavigateToRecipePage);
+            OnMainPageShowHelpCommand = new Command(OnMainPageShowHelp);
 
             InitializeFileWatcher();
         }
@@ -487,6 +489,23 @@ namespace CookOff.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string GetImagePath()
+        {
+            // Ensure the images directory exists in the project directory
+            string projectDirectory = GetProjectDirectory();
+            string imagesDirectory = Path.Combine(projectDirectory, "images");
+            string imageName = "Help.jpg"; // Change this to match your image file name
+            return Path.Combine(imagesDirectory, imageName);
+        }
+
+        public string HelpImageSource => GetImagePath();
+
+        private async void OnMainPageShowHelp()
+        {
+            // Display a message indicating the purpose of the picker
+            await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Collection! \n\nThis page lists all available recipes. Click on any recipe to view its detailed instructions and ingredients.", "OK");
         }
     }
 }

@@ -144,6 +144,7 @@ namespace CookOff.ViewModels
         public ICommand BackCommand { get; private set; }
         public ICommand UploadImageCommand { get; private set; }
         public ICommand PickerShowHelpCommand { get; private set; }
+        public ICommand CreateRecipeShowHelpCommand {  get; private set; }
 
         private int stepCount = 1;
 
@@ -157,6 +158,7 @@ namespace CookOff.ViewModels
             BackCommand = new Command(OnBack);
             UploadImageCommand = new Command(async () => await OnUploadImage());
             PickerShowHelpCommand = new Command(OnPickerShowHelp);
+            CreateRecipeShowHelpCommand = new Command(OnCreateRecipeShowHelp);
 
             // Set default values for the pickers
             Rating = Ratings.FirstOrDefault();
@@ -393,6 +395,12 @@ namespace CookOff.ViewModels
         {
             // Display a message indicating the purpose of the picker
             await App.Current.MainPage.DisplayAlert("Help", "This picker is a dropdown menu for different kinds of measurement units.", "OK");
+        }
+
+        private async void OnCreateRecipeShowHelp()
+        {
+            // Display a message indicating the purpose of the picker
+            await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Creation! \n\nHere, you can create your own recipes by entering the necessary details. Fill in the recipe name, ingredients, and instructions, and don't forget to add a photo if you have one. \n\nWhen you're finished, click 'Submit' to add your recipe to our collection.", "OK");
         }
     }
 }
