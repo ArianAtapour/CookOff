@@ -5,10 +5,14 @@ namespace CookOff.ViewModels
 {
     public class IngredientVM : INotifyPropertyChanged
     {
+        // Class for the ingredient view model
+
+        // Fields
         private string name;
         private string unit;
         private string quantity;
 
+        // Constructor 
         public IngredientVM(string name, string unit, string quantity)
         {
             setName(name);
@@ -46,6 +50,8 @@ namespace CookOff.ViewModels
             }
         }
 
+
+        // Setting the ingredient name
         public void setName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -56,8 +62,11 @@ namespace CookOff.ViewModels
             OnPropertyChanged(nameof(Name));
         }
 
+        // Getting the ingredient name
         public string getName() => name;
 
+
+        // Setting the ingredient's unit
         public void setUnit(string unit)
         {
             if (string.IsNullOrEmpty(unit))
@@ -68,8 +77,11 @@ namespace CookOff.ViewModels
             OnPropertyChanged(nameof(Unit));
         }
 
+
+        // Getting the ingredient's unit
         public string getUnit() => unit;
 
+        // Setting the ingredient quantity
         public void setQuantity(string quantity)
         {
             if (string.IsNullOrEmpty(quantity) || !double.TryParse(quantity, out double qty) || qty <= 0)
@@ -80,6 +92,7 @@ namespace CookOff.ViewModels
             OnPropertyChanged(nameof(Quantity));
         }
 
+        // Getting the ingredient quantity
         public string getQuantity() => quantity;
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -18,6 +18,7 @@ namespace CookOff.ViewModels
 {
     public class CreateRecipeVM : INotifyPropertyChanged
     {
+        //Fields + methods
         private static int RecipeCounter = 1;
 
         private string _recipeName;
@@ -144,7 +145,7 @@ namespace CookOff.ViewModels
         public ICommand BackCommand { get; private set; }
         public ICommand UploadImageCommand { get; private set; }
         public ICommand PickerShowHelpCommand { get; private set; }
-        public ICommand CreateRecipeShowHelpCommand {  get; private set; }
+        public ICommand CreateRecipeShowHelpCommand { get; private set; }
 
         private int stepCount = 1;
 
@@ -160,11 +161,11 @@ namespace CookOff.ViewModels
             PickerShowHelpCommand = new Command(OnPickerShowHelp);
             CreateRecipeShowHelpCommand = new Command(OnCreateRecipeShowHelp);
 
-            // Set default values for the pickers
+            //Set default values for the pickers
             Rating = Ratings.FirstOrDefault();
             IngredientUnit = IngredientUnits.FirstOrDefault();
 
-            // Ensure RecipeCounter starts from the maximum RecipeID
+            //Ensure RecipeCounter starts from the maximum RecipeID
             string projectDir = GetProjectDirectory();
             string recipesFilePath = Path.Combine(projectDir, "recipes.csv");
             if (File.Exists(recipesFilePath))
@@ -200,15 +201,15 @@ namespace CookOff.ViewModels
 
         private string GetImagePath()
         {
-            // Ensure the images directory exists in the project directory
+            //Ensure the images directory exists in the project directory
             string projectDirectory = GetProjectDirectory();
             string imagesDirectory = Path.Combine(projectDirectory, "images");
-            string imageName = "Help.jpg"; 
+            string imageName = "Help.jpg"; //Image of the help button
             return Path.Combine(imagesDirectory, imageName);
         }
 
         public string HelpImageSource => GetImagePath();
-        
+
         private void OnAddStep()
         {
             Steps.Add(new StepVM($"Step {stepCount++}"));
@@ -223,7 +224,7 @@ namespace CookOff.ViewModels
                 Ingredients.Add(new IngredientVM(
                     IngredientName, IngredientUnit, IngredientQuantity));
 
-                // Clear input fields
+                //Clear input fields
                 IngredientName = string.Empty;
                 IngredientQuantity = string.Empty;
                 IngredientUnit = string.Empty;
@@ -235,6 +236,7 @@ namespace CookOff.ViewModels
             return int.TryParse(value, out var result) ? result : 0;
         }
 
+        //Error handling
         private bool ValidateRecipe()
         {
             if (string.IsNullOrWhiteSpace(RecipeName))
@@ -314,7 +316,7 @@ namespace CookOff.ViewModels
                 newRecipe.AddIngredient(new Ingredient(newRecipe.RecipeID, ingredient.Name, ingredient.Unit, double.Parse(ingredient.Quantity)));
             }
 
-            // Save the newRecipe object to CSV files
+            //Save the newRecipe object to CSV files
             string projectDir = GetProjectDirectory();
             string recipesFilePath = Path.Combine(projectDir, "recipes.csv");
             string ingredientsFilePath = Path.Combine(projectDir, "ingredients.csv");
@@ -343,7 +345,7 @@ namespace CookOff.ViewModels
 
                 if (result != null)
                 {
-                    // Ensure the images directory exists in the project directory
+                    //Ensure the images directory exists in the project directory
                     string projectDirectory = GetProjectDirectory();
                     string imagesDirectory = Path.Combine(projectDirectory, "images");
 
@@ -352,18 +354,18 @@ namespace CookOff.ViewModels
                         Directory.CreateDirectory(imagesDirectory);
                     }
 
-                    // Create a unique file name for the image
+                    //Create a unique file name for the image
                     string fileName = Path.GetFileName(result.FullPath);
                     string newFilePath = Path.Combine(imagesDirectory, fileName);
 
-                    // Copy the selected file to the new directory
+                    //Copy the selected file to the new directory
                     using (var stream = await result.OpenReadAsync())
                     using (var newStream = File.Create(newFilePath))
                     {
                         await stream.CopyToAsync(newStream);
                     }
 
-                    // Save the relative path of the image
+                    //Save the relative path of the image
                     string relativeImagePath = Path.GetRelativePath(projectDirectory, newFilePath);
                     ImagePath = relativeImagePath ?? throw new ArgumentNullException(nameof(relativeImagePath), "Image path cannot be null");
                     Debug.WriteLine($"ImagePath set to: {ImagePath}");
@@ -371,7 +373,7 @@ namespace CookOff.ViewModels
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, such as the user cancelling the file picker
+                //Handle any exceptions, like the user cancelling the file picker
                 Debug.WriteLine($"File picking error: {ex.Message}");
             }
         }
@@ -379,7 +381,7 @@ namespace CookOff.ViewModels
 
         private string GetProjectDirectory()
         {
-            // Assuming the application runs from the bin directory, we can navigate up to the project directory
+            //From bin folder up to project directory
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
             var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
             return projectDir;
@@ -393,13 +395,13 @@ namespace CookOff.ViewModels
 
         private async void OnPickerShowHelp()
         {
-            // Display a message indicating the purpose of the picker
+            //Display a message indicating the purpose of the picker
             await App.Current.MainPage.DisplayAlert("Help", "This picker is a dropdown menu for different kinds of measurement units.", "OK");
         }
 
         private async void OnCreateRecipeShowHelp()
         {
-            // Display a message indicating the purpose of the picker
+            //Display a message indicating the purpose of the picker
             await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Creation! \n\nHere, you can create your own recipes by entering the necessary details. Fill in the recipe name, ingredients, and instructions, and don't forget to add a photo if you have one. \n\nWhen you're finished, click 'Submit' to add your recipe to our collection.", "OK");
         }
     }

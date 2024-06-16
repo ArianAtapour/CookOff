@@ -6,6 +6,9 @@ namespace CookOff.ViewModels
 {
     public class StepVM : INotifyPropertyChanged
     {
+        //Step View Model
+
+        //Fields
         private string name;
         private string description;
         private bool timerRequired;
@@ -14,6 +17,7 @@ namespace CookOff.ViewModels
         private string seconds;
         public ICommand StepShowHelpCommand { get; private set; }
 
+        //Constructor
         public StepVM(string name)
         {
             this.name = name;
@@ -25,6 +29,7 @@ namespace CookOff.ViewModels
             StepShowHelpCommand = new Command(OnStepShowHelp);
         }
 
+        //Methods
         public string Name
         {
             get => name;
@@ -93,13 +98,13 @@ namespace CookOff.ViewModels
 
         private async void OnStepShowHelp()
         {
-            // Display a message indicating the purpose of each step
+            //Display a message indicating the purpose of each step
             await App.Current.MainPage.DisplayAlert("Help", "This is where you can describe the current step in detail.", "OK");
         }
 
         private string GetProjectDirectory()
         {
-            // Assuming the application runs from the bin directory, we can navigate up to the project directory
+            //Assuming the application runs from the bin directory, we can navigate up to the project directory
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
             var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
             return projectDir;
@@ -107,7 +112,7 @@ namespace CookOff.ViewModels
 
         private string GetImagePath()
         {
-            // Ensure the images directory exists in the project directory
+            //Ensure the images directory exists in the project directory
             string projectDirectory = GetProjectDirectory();
             string imagesDirectory = Path.Combine(projectDirectory, "images");
             string imageName = "Help.jpg"; // Change this to match your image file name

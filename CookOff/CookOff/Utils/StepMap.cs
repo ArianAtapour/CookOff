@@ -3,6 +3,7 @@ using CookOff.Models;
 
 public sealed class StepMap : ClassMap<Step>
 {
+    //CSV headers for the Step CSV file
     public StepMap()
     {
         Map(m => m.RecipeID).Name("RecipeID");

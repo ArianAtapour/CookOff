@@ -8,6 +8,9 @@ namespace CookOff.Utils
 {
     public static class CsvHelper
     {
+        // Class for writing data to CSV files
+
+        // Adds the recipe to the csv
         public static void AppendRecipeToCsv(string recipesFilePath, string ingredientsFilePath, string stepsFilePath, Recipe recipe)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -87,7 +90,7 @@ namespace CookOff.Utils
             }
         }
 
-        //Save ratings
+        // Adds the ratings of the recipes to the csv
         public static void AppendRatingToCsv(string ratingsFilePath, int recipeId, int userRating)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)

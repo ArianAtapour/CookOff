@@ -6,6 +6,9 @@ namespace CookOff.Models
 {
     public class Recipe : INotifyPropertyChanged
     {
+        // Recipe Class
+
+        // Fields
         public int RecipeID { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
@@ -13,7 +16,8 @@ namespace CookOff.Models
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public List<Step> Steps { get; set; } = new List<Step>();
 
-        private List<int> userRatings = new List<int>();  // Store all user ratings
+        // Store all user ratings
+        private List<int> userRatings = new List<int>();
 
         public List<int> UserRatings
         {
@@ -54,11 +58,13 @@ namespace CookOff.Models
             Rating = rating;
         }
 
+        // Adding ingredients to the recipe
         public void AddIngredient(Ingredient ingredient)
         {
             Ingredients.Add(ingredient);
         }
 
+        // Adding steps to the recipe
         public void AddStep(Step step)
         {
             Steps.Add(step);

@@ -22,8 +22,7 @@
                 </HorizontalStackLayout>
             </Frame>
 
-            <!-- Sort Picker -->
-            <Picker TitleColor="Black" Title="Sort by:" WidthRequest="300" BackgroundColor="#CABA9C" SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Margin="0,30,0,0"/>
+            <Picker TitleColor="Black" Title="Sort by:" TextColor="Black" WidthRequest="300" BackgroundColor="#CABA9C" SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Margin="0,30,0,0"/>
 
             <CollectionView WidthRequest="700" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="OnSelectionChanged" Margin="0,40,0,25">
                 <CollectionView.ItemTemplate>
@@ -47,7 +46,7 @@
                                             <Label Text="Completions: " TextColor="Black" FontAttributes="Italic" Margin="15,0,10,0"/>
                                             <Label Text="{Binding UserRatings.Count}" TextColor="Black" FontAttributes="Italic"/>
                                             <Label Text="User rating: " TextColor="Black" FontAttributes="Italic" Margin="15,0,10,0"/>
-                                            <Label Text="{Binding AverageRating}" TextColor="Black" FontAttributes="Italic"/>
+                                            <Label Text="{Binding AverageRating, StringFormat='{0:F2}'}" TextColor="Black" FontAttributes="Italic"/>
                                         </StackLayout>
                                     </VerticalStackLayout>
                                     <CheckBox IsChecked="{Binding IsSelected}" Color="#865D36" VerticalOptions="Center" HorizontalOptions="Center" Margin="10,0,0,0" Grid.Column="2"/>
@@ -59,8 +58,8 @@
             </CollectionView>
 
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Margin="0,0,0,20">
-                <Button WidthRequest="500" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Create Recipe" Command="{Binding NavigateToCreateRecipeCommand}" Margin="0,0,15,0"/>
-                <Button WidthRequest="500" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Delete Selected Recipes" Command="{Binding DeleteSelectedRecipesCommand}" />
+                <Button WidthRequest="500" BackgroundColor="#865D36" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" Text="Create Recipe" Command="{Binding NavigateToCreateRecipeCommand}" Margin="0,0,15,0"/>
+                <Button WidthRequest="500" BackgroundColor="#865D36" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" Text="Delete Selected Recipes" Command="{Binding DeleteSelectedRecipesCommand}" />
             </HorizontalStackLayout>
         </StackLayout>
     </ScrollView>

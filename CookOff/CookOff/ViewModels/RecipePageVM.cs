@@ -59,16 +59,17 @@ namespace CookOff.ViewModels
 
         public RecipePageVM()
         {
-            BackCommand = new Command(OnBack);
+            BackCommand = new Command(async () => await OnBackAsync());
             UpdateIngredientsCountCommand = new Command(UpdateIngredientsCount);
             UpdateStepsCountCommand = new Command(UpdateStepsCount);
             RecipeViewShowHelpCommand = new Command(OnRecipeViewShowHelp);
             AverageRatingShowHelpCommand = new Command(OnAverageRatingShowHelp);
         }
 
-        private void OnBack()
+        private async Task OnBackAsync()
         {
-            Shell.Current.GoToAsync("..");
+            //Update MainPage once you go back to it
+            await Shell.Current.GoToAsync("MainPage");
         }
 
         private async void UpdateCounts()
@@ -87,7 +88,7 @@ namespace CookOff.ViewModels
                 await ShowRatingMessageBox();
             }
         }
-         
+
         private void AssignStepNumbers()
         {
             var stepNumber = 0;
@@ -108,7 +109,7 @@ namespace CookOff.ViewModels
                 OnPropertyChanged(nameof(Recipe.UserRatings));
                 OnPropertyChanged(nameof(Recipe.AverageRating));
                 UpdateCounts();
-                // Save the newRecipe object to CSV files
+                //Save the newRecipe object to CSV files
                 string projectDir = GetProjectDirectory();
 
                 string userRatingFilePath = Path.Combine(projectDir, "ratings.csv");
@@ -156,7 +157,7 @@ namespace CookOff.ViewModels
         }
         private string GetProjectDirectory()
         {
-            // Assuming the application runs from the bin directory, we can navigate up to the project directory
+            //Assuming the application runs from the bin directory, we can navigate up to the project directory
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
             var projectDir = Directory.GetParent(currentDir).Parent.Parent.Parent.Parent.Parent.FullName;
             return projectDir;
@@ -164,7 +165,7 @@ namespace CookOff.ViewModels
 
         private string GetImagePath()
         {
-            // Ensure the images directory exists in the project directory
+            //Ensure the images directory exists in the project directory
             string projectDirectory = GetProjectDirectory();
             string imagesDirectory = Path.Combine(projectDirectory, "images");
             string imageName = "Help.jpg"; // Change this to match your image file name
@@ -175,13 +176,13 @@ namespace CookOff.ViewModels
 
         private async void OnRecipeViewShowHelp()
         {
-            // Display a message indicating the purpose of the recipe details page
-            await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Details Page! \n\nHere you can find detailed instructions and ingredients for the selected recipe. \n\nBrowse through the steps and gather all necessary ingredients to start cooking your dish!", "OK");
+            //Display a message indicating the purpose of the recipe details page
+            await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Details Page! \n\nHere you can find detailed instructions and ingredients for the selected recipe. \n\nBrowse through the steps and gather all necessary ingredients to start cooking your dish! \n\nOnce all the ingredients and steps are checked off, it will mark the completion of the recipe and you will be asked to fill in a review.", "OK");
         }
 
         private async void OnAverageRatingShowHelp()
         {
-            // Display a message indicating the purpose of the recipe details page
+            //Display a message indicating the purpose of the recipe details page
             await App.Current.MainPage.DisplayAlert("Help", "The average rating represents the overall user satisfaction with this recipe, based on all the collected ratings.", "OK");
 
         }

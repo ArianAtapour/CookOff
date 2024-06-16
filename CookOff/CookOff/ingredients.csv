@@ -1,27 +1,10 @@
 RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
-5,Oil,Liters (l),1
-5,Chillies,Pieces (pcs),2
-5,Tortillas,Pieces (pcs),5
-5,Minced Beef,Grams (g),500
-5,Red Beans,Grams (g),100
-5,Tomato Paste,Milliliters (ml),100
-5,Cheese,Grams (g),50
-5,"Salt ",Teaspoons (tsp),5
-5,Pepper,Tablespoons (tbsp),5
-7,Classes,Pieces (pcs),13
-7,Attributes,Pieces (pcs),20
-7,Methods,Pieces (pcs),40
-7,Arrows,Pieces (pcs),14
-8,Burger Buns,Pieces (pcs),1
-8,Bacon Strips,Pieces (pcs),2
-8,"Oil ",Milliliters (ml),10
-8,Tomato,Pieces (pcs),1
-8,Lettuce,Grams (g),10
-8,Cheese Slices,Pieces (pcs),2
-8,Mayonnaise,Milliliters (ml),10
-8,Hamburger Patties,Pieces (pcs),2
-8,"Salt ",Grams (g),3
-8,Pepper,Grams (g),3
-9,Small Man,Pieces (pcs),1
-9,Pepper,Grams (g),50
-9,Salt,Grams (g),50
+1,Spaghetti,Grams (g),50
+1,Pasta Sauce,Grams (g),30
+1,Parmesan,Teaspoons (tsp),2
+1,Minced Meat,Grams (g),100
+1,Water,Liters (l),1
+2,Bread,Pieces (pcs),2
+2,Salad,Pieces (pcs),1
+2,Pickles,Pieces (pcs),4
+2,Tomatoes,Pieces (pcs),2

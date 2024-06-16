@@ -4,12 +4,14 @@ namespace CookOff;
 
 public partial class CreateRecipePage : ContentPage
 {
+    //Constructor
     public CreateRecipePage()
     {
         InitializeComponent();
         BindingContext = new CreateRecipeVM();
     }
 
+    //Methods (error handling)
     private bool IsNumeric(string text)
     {
         return text.All(char.IsDigit);
@@ -19,10 +21,10 @@ public partial class CreateRecipePage : ContentPage
     {
         if (!string.IsNullOrWhiteSpace(e.NewTextValue))
         {
-            // Check if the entered value is numeric
+            //Check if the entered value is numeric
             if (!IsNumeric(e.NewTextValue))
             {
-                // If not numeric, remove the last character from the text
+                //If not numeric, remove the last character from the text
                 ((Entry)sender).Text = e.OldTextValue;
             }
         }
@@ -52,6 +54,7 @@ public partial class CreateRecipePage : ContentPage
         }
     }
 
+    //Timer text
     private void OnHoursTextChanged(object sender, TextChangedEventArgs e)
     {
         HandleNumericText(sender, e);

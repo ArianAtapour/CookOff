@@ -55,10 +55,10 @@
                                 <StackLayout Orientation="Horizontal">
                                     <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnIngredientCheckedChanged" Margin="0,0,0,6"/>
                                     <VerticalStackLayout VerticalOptions="CenterAndExpand">
-                                        <Label Text="{Binding Name}" />
+                                        <Label Text="{Binding Name}" TextColor="Black"/>
                                         <HorizontalStackLayout VerticalOptions="CenterAndExpand">
-                                            <Label Text="{Binding Quantity}" Margin="0,0,3,0"/>
-                                            <Label Text="{Binding Unit}"/>
+                                            <Label Text="{Binding Quantity}" TextColor="Black" Margin="0,0,3,0"/>
+                                            <Label Text="{Binding Unit}" TextColor="Black"/>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                 </StackLayout>
@@ -78,15 +78,15 @@
                                     <HorizontalStackLayout>
                                         <CheckBox Color="#865D36" IsChecked="{Binding IsSelected}" CheckedChanged="OnStepCheckedChanged" Margin="0,0,0,10" />
                                         <VerticalStackLayout VerticalOptions="CenterAndExpand">
-                                            <Label Text="{Binding StepNumber}" VerticalOptions="CenterAndExpand" FontAttributes="Bold" />
-                                            <Label Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
+                                            <Label Text="{Binding StepNumber}" TextColor="Black" VerticalOptions="CenterAndExpand" FontAttributes="Bold" />
+                                            <Label Text="{Binding Description}" TextColor="Black" VerticalOptions="CenterAndExpand" />
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
-                                    <Label Text="{Binding Timer}" IsVisible="{Binding TimerRequired}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Timer}" TextColor="Black" IsVisible="{Binding TimerRequired}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
                                     <StackLayout Orientation="Horizontal" IsVisible="{Binding TimerRequired}" HorizontalOptions="CenterAndExpand" Margin="0,12,0,5">
-                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Start" Command="{Binding StartTimerCommand}" Margin="0,0,10,0"/>
-                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Pause" Command="{Binding PauseTimerCommand}" Margin="0,0,10,0"/>
-                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Stop" Command="{Binding StopTimerCommand}" />
+                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Start" TextColor="Black" Command="{Binding StartTimerCommand}" Margin="0,0,10,0"/>
+                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Pause" TextColor="Black" Command="{Binding PauseTimerCommand}" Margin="0,0,10,0"/>
+                                        <Button WidthRequest="150" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Stop" TextColor="Black" Command="{Binding StopTimerCommand}" />
                                     </StackLayout>
                                 </StackLayout>
                             </DataTemplate>
@@ -95,7 +95,7 @@
                 </StackLayout>
             </Frame>
 
-            <Button WidthRequest="600" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" Text="Back" Command="{Binding BackCommand}" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,0,0,20"/>
+            <Button WidthRequest="600" BackgroundColor="#865D36" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" Text="Back" Command="{Binding BackCommand}" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,0,0,20"/>
 
         </StackLayout>
     </ScrollView>

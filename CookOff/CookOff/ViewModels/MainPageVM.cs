@@ -17,6 +17,10 @@ namespace CookOff.ViewModels
 {
     public class MainPageVM : INotifyPropertyChanged
     {
+        // Class for the main page view model
+
+
+        // Fields 
         private FileSystemWatcher fileWatcher;
         private DateTime lastRead = DateTime.MinValue;
         private readonly TimeSpan debounceTime = TimeSpan.FromMilliseconds(500);
@@ -48,12 +52,13 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Command fields
         public ICommand NavigateToCreateRecipeCommand { get; private set; }
         public ICommand DeleteSelectedRecipesCommand { get; private set; }
         public ICommand NavigateToRecipePageCommand { get; private set; }
         public ICommand OnMainPageShowHelpCommand { get; private set; }
 
-
+        // Constructor
         public MainPageVM()
         {
             Recipes = new ObservableCollection<Recipe>();
@@ -75,6 +80,8 @@ namespace CookOff.ViewModels
             InitializeFileWatcher();
         }
 
+
+        // Method to monitor changes in the csv
         private void InitializeFileWatcher()
         {
             string projectDir = GetProjectDirectory();
@@ -91,6 +98,7 @@ namespace CookOff.ViewModels
             fileWatcher.EnableRaisingEvents = true;
         }
 
+        // Sorts recipes according to name, average user rating and deliciousness rating 
         private void SortRecipes()
         {
             switch (SelectedSortOption)
@@ -108,6 +116,7 @@ namespace CookOff.ViewModels
             OnPropertyChanged(nameof(Recipes));
         }
 
+        // Method that laods data from the csv when changes are made
         private async void OnCsvFileChanged(object sender, FileSystemEventArgs e)
         {
             var now = DateTime.Now;
@@ -126,11 +135,13 @@ namespace CookOff.ViewModels
             });
         }
 
+        // Navigation to the recipe creation page
         private async void OnNavigateToCreateRecipe()
         {
             await Shell.Current.GoToAsync("CreateRecipePage");
         }
 
+        // Navigation to the recipe view page
         private async void OnNavigateToRecipePage(Recipe selectedRecipe)
         {
             if (selectedRecipe == null)
@@ -144,6 +155,7 @@ namespace CookOff.ViewModels
             await Shell.Current.GoToAsync("RecipePage", navigationParameter);
         }
 
+        // Loads all the recipes from the csv to main page
         private void LoadRecipesFromCsv()
         {
             string projectDir = GetProjectDirectory();
@@ -197,6 +209,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Loads all the ingredients from the csv to recipe page
         private void LoadIngredientsFromCsv()
         {
             string projectDir = GetProjectDirectory();
@@ -235,6 +248,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Loads all the steps from the csv to recipe page
         private void LoadStepsFromCsv()
         {
             string projectDir = GetProjectDirectory();
@@ -273,6 +287,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Loads all the ratings from the csv to recipe page
         public void LoadRatingsFromCsv()
         {
             Debug.WriteLine("Loading ratings");
@@ -328,6 +343,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Method that shows a 'Are you sure?' pop up and deletes the selected data from the csv when the delete button is pressed
         private async void OnDeleteSelectedRecipes()
         {
             bool isConfirmed = await App.Current.MainPage.DisplayAlert(
@@ -358,6 +374,7 @@ namespace CookOff.ViewModels
             RemoveRatingsByRecipeIds(selectedRecipeIds);
         }
 
+        // Saves the recipe data to the csv
         private void SaveRecipesToCsv()
         {
             string projectDir = GetProjectDirectory();
@@ -377,6 +394,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Removes the recipe rating by the ID of the recipe
         private void RemoveRatingsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
@@ -422,6 +440,8 @@ namespace CookOff.ViewModels
                 }
             }
         }
+
+        // Removes the recipe ingredients by the ID of the recipe
         private void RemoveIngredientsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
@@ -450,6 +470,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Removes the recipe steps by the ID of the recipe
         private void RemoveStepsByRecipeIds(HashSet<int> recipeIds)
         {
             string projectDir = GetProjectDirectory();
@@ -478,6 +499,7 @@ namespace CookOff.ViewModels
             }
         }
 
+        // Gets the local project path
         private string GetProjectDirectory()
         {
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -491,6 +513,7 @@ namespace CookOff.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        // Method to get the 'Help.jpg' image
         private string GetImagePath()
         {
             // Ensure the images directory exists in the project directory
@@ -502,6 +525,7 @@ namespace CookOff.ViewModels
 
         public string HelpImageSource => GetImagePath();
 
+        // Method to show a help pop up for the main page
         private async void OnMainPageShowHelp()
         {
             // Display a message indicating the purpose of the picker

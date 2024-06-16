@@ -7,6 +7,10 @@ namespace CookOff.Utils
 {
     public class ImagePathConverter : IValueConverter
     {
+        // Class for converting relative image path to the project directory
+
+
+        // Converts the image paths of images folder to the local project directory
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -24,6 +28,7 @@ namespace CookOff.Utils
             throw new NotImplementedException();
         }
 
+        // Gets the local project directory path
         private string GetProjectDirectory()
         {
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;

@@ -10,12 +10,14 @@ namespace CookOff.Models
 {
     public class Step : INotifyPropertyChanged
     {
+        //Fields
         private bool isSelected;
         private TimeSpan timer;
         private bool isTimerRunning;
         private bool isTimerPaused;
         private TimeSpan originalTimer;
 
+        //Methods
         public int RecipeID { get; set; }
         public string Description { get; set; }
         public bool TimerRequired { get; set; }
@@ -43,6 +45,7 @@ namespace CookOff.Models
         public ICommand PauseTimerCommand { get; }
         public ICommand StopTimerCommand { get; }
 
+        //Timer constructor
         public Step()
         {
             StartTimerCommand = new Command(StartTimer);
@@ -50,6 +53,7 @@ namespace CookOff.Models
             StopTimerCommand = new Command(StopTimer);
         }
 
+        //Main constructor
         public Step(int recipeID, string description, bool timerRequired, TimeSpan timer)
         {
             RecipeID = recipeID;
@@ -62,6 +66,7 @@ namespace CookOff.Models
             StopTimerCommand = new Command(StopTimer);
         }
 
+        //Start timer function
         private void StartTimer()
         {
             if (!isTimerRunning || isTimerPaused)
@@ -87,12 +92,14 @@ namespace CookOff.Models
             }
         }
 
+        //Pausing the timer
         private void PauseTimer()
         {
             isTimerPaused = true;
             isTimerRunning = false;
         }
 
+        //Stopping the timer (resets the timer to its original time)
         private void StopTimer()
         {
             isTimerRunning = false;
@@ -100,6 +107,7 @@ namespace CookOff.Models
             Timer = originalTimer; // Reset the timer to the original time
         }
 
+        //Play an .mp3 file function
         private async void PlaySound()
         {
             try

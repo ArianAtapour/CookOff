@@ -6,6 +6,9 @@ namespace CookOff.Models
 {
     public class Ingredient : INotifyPropertyChanged
     {
+        //Ingredient Class
+
+        //Fields
         public int RecipeID { get; set; }
         public string Name { get; set; }
         public string Unit { get; set; }
@@ -22,8 +25,10 @@ namespace CookOff.Models
             }
         }
 
+        // Parameterless constructor for deserialization
         public Ingredient() { }
 
+        //Constructor
         public Ingredient(int recipeID, string name, string unit, double quantity)
         {
             RecipeID = recipeID;
@@ -32,6 +37,7 @@ namespace CookOff.Models
             Quantity = quantity;
         }
 
+        //Set the name of the ingredient
         public void SetName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -41,6 +47,7 @@ namespace CookOff.Models
             this.Name = name;
         }
 
+        //Set the unit of the ingredient (lbs, kg, etc.)
         public void SetUnit(string unit)
         {
             if (string.IsNullOrEmpty(unit))
@@ -50,6 +57,7 @@ namespace CookOff.Models
             this.Unit = unit;
         }
 
+        //Setting the numerical quantity of the ingredient
         public void SetQuantity(double quantity)
         {
             if (quantity <= 0)
