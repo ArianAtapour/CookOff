@@ -55,6 +55,7 @@ namespace CookOff.ViewModels
         public ICommand UpdateIngredientsCountCommand { get; }
         public ICommand UpdateStepsCountCommand { get; }
         public ICommand RecipeViewShowHelpCommand { get; private set; }
+        public ICommand AverageRatingShowHelpCommand { get; private set; }
 
         public RecipePageVM()
         {
@@ -62,6 +63,7 @@ namespace CookOff.ViewModels
             UpdateIngredientsCountCommand = new Command(UpdateIngredientsCount);
             UpdateStepsCountCommand = new Command(UpdateStepsCount);
             RecipeViewShowHelpCommand = new Command(OnRecipeViewShowHelp);
+            AverageRatingShowHelpCommand = new Command(OnAverageRatingShowHelp);
         }
 
         private void OnBack()
@@ -175,6 +177,13 @@ namespace CookOff.ViewModels
         {
             // Display a message indicating the purpose of the recipe details page
             await App.Current.MainPage.DisplayAlert("Help", "Welcome to the Recipe Details Page! \n\nHere you can find detailed instructions and ingredients for the selected recipe. \n\nBrowse through the steps and gather all necessary ingredients to start cooking your dish!", "OK");
+        }
+
+        private async void OnAverageRatingShowHelp()
+        {
+            // Display a message indicating the purpose of the recipe details page
+            await App.Current.MainPage.DisplayAlert("Help", "The average rating represents the overall user satisfaction with this recipe, based on all the collected ratings.", "OK");
+
         }
     }
 }

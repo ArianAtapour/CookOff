@@ -39,9 +39,9 @@
 
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label Text="{Binding UserRatingAverageLabel}" TextColor="#AC8968" FontSize="Medium" Margin="0,0,10,0"/>
-                <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="5,5,0,0">
+                <Image Source="{Binding HelpImageSource}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" Margin="-8,3,0,0">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding StepShowHelpCommand}" />
+                        <TapGestureRecognizer Command="{Binding AverageRatingShowHelpCommand}" />
                     </Image.GestureRecognizers>
                 </Image>
             </HorizontalStackLayout>
