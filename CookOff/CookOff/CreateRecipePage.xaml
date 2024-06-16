@@ -2,9 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CookOff.ViewModels"
+             xmlns:utils="clr-namespace:CookOff.Utils"
              x:Class="CookOff.CreateRecipePage"
              BackgroundColor="#EEE2DC"
              Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <utils:ImagePathConverter x:Key="ImagePathConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.BindingContext>
         <local:CreateRecipeVM />
@@ -28,7 +35,7 @@
 
             <Entry BackgroundColor="#CABA9C" WidthRequest="500" Placeholder="Recipe Name" Text="{Binding RecipeName}" PlaceholderColor="Black" Margin="0,0,0,30"/>
             <Button BackgroundColor="#865D36" WidthRequest="300" BorderColor="Black" BorderWidth="1" Text="Upload Image" Command="{Binding UploadImageCommand}" />
-            <Image Source="{Binding ImagePath}" MaximumHeightRequest="250" Margin="0,0,0,20" />
+            <Image Source="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}" MaximumHeightRequest="250" Margin="0,0,0,20" />
 
             <Picker WidthRequest="500" Title="Deliciousness Rating" BackgroundColor="#CABA9C" HeightRequest="70" ItemsSource="{Binding Ratings}" SelectedItem="{Binding Rating, Mode=TwoWay}" SelectedIndex="0" Margin="0,0,0,30"/>
 

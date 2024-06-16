@@ -203,7 +203,7 @@ namespace CookOff.ViewModels
             // Ensure the images directory exists in the project directory
             string projectDirectory = GetProjectDirectory();
             string imagesDirectory = Path.Combine(projectDirectory, "images");
-            string imageName = "Help.jpg"; // Change this to match your image file name
+            string imageName = "Help.jpg"; 
             return Path.Combine(imagesDirectory, imageName);
         }
 
