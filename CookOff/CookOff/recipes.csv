@@ -1,3 +1,4 @@
 RecipeID,Recipe Name,Image Path,Rating
-1,Spaghetti con NHL Stenden,C:\Users\arian\Desktop\Repos\CookOff\CookOff\CookOff\images\Spaghetti-with-Meat-Sauce-Recipe-1-1200.jpg,4
-2,"Sandwich ",C:\Users\arian\Desktop\Repos\CookOff\CookOff\CookOff\images\Ham_Sandwich_011-1-49227336bc074513aaf8fdbde440eafe.jpg,4
+1,Spaghetti con NHL Stenden,images\Spaghetti-with-Meat-Sauce-Recipe-1-1200.jpg,4
+2,"Sandwich ",images\Ham_Sandwich_011-1-49227336bc074513aaf8fdbde440eafe.jpg,4
+3,Burger,images\burger.jpg,4
