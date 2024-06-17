@@ -355,7 +355,7 @@ namespace CookOff.ViewModels
 
             if (!isConfirmed)
             {
-                return;
+                await Shell.Current.GoToAsync("MainPage");
             }
 
             var selectedRecipes = Recipes.Where(r => r.IsSelected).ToList();

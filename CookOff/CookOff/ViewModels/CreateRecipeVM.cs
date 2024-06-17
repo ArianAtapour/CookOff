@@ -142,7 +142,7 @@ namespace CookOff.ViewModels
         public ICommand AddStepCommand { get; private set; }
         public ICommand AddIngredientsCommand { get; private set; }
         public ICommand SubmitCommand { get; private set; }
-        public ICommand BackCommand { get; private set; }
+        public ICommand BackCommand { get; }
         public ICommand UploadImageCommand { get; private set; }
         public ICommand PickerShowHelpCommand { get; private set; }
         public ICommand CreateRecipeShowHelpCommand { get; private set; }
@@ -156,7 +156,7 @@ namespace CookOff.ViewModels
             AddStepCommand = new Command(OnAddStep);
             AddIngredientsCommand = new Command(OnAddIngredient);
             SubmitCommand = new Command(OnSubmit);
-            BackCommand = new Command(OnBack);
+            BackCommand = new Command(async () => await OnBackAsync());
             UploadImageCommand = new Command(async () => await OnUploadImage());
             PickerShowHelpCommand = new Command(OnPickerShowHelp);
             CreateRecipeShowHelpCommand = new Command(OnCreateRecipeShowHelp);
@@ -328,9 +328,10 @@ namespace CookOff.ViewModels
         }
 
 
-        private async void OnBack()
+        private async Task OnBackAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            //Update MainPage once you go back to it
+            await Shell.Current.GoToAsync("MainPage");
         }
 
         private async Task OnUploadImage()
