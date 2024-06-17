@@ -189,7 +189,7 @@ namespace CookOff.ViewModels
                         // Add project directory to the image path
                         if (!string.IsNullOrWhiteSpace(recipe.ImagePath))
                         {
-                            recipe.ImagePath = Path.Combine(projectDir, recipe.ImagePath);
+                            recipe.DisplayImagePath = Path.Combine(projectDir, recipe.ImagePath);
                         }
 
                         if (!existingIds.Add(recipe.RecipeID))

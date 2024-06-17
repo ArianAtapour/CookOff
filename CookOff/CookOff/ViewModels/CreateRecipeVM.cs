@@ -298,6 +298,13 @@ namespace CookOff.ViewModels
             {
                 return;
             }
+            // Find the index of the "images" directory in the path
+            int imagesIndex = ImagePath.IndexOf("images");
+
+            // Create the trimmed path from "images" to the end
+            this._imagePath = ImagePath.Substring(imagesIndex);
+            Debug.WriteLine($"ImagePath set to: {ImagePath}");
+            Debug.WriteLine($"ImagePath set to: {this._imagePath}");
 
             var newRecipe = new Recipe(RecipeCounter++, RecipeName, ImagePath, Rating);
 
@@ -369,6 +376,7 @@ namespace CookOff.ViewModels
                     //Save the relative path of the image
                     string relativeImagePath = Path.GetRelativePath(projectDirectory, newFilePath);
                     ImagePath = relativeImagePath ?? throw new ArgumentNullException(nameof(relativeImagePath), "Image path cannot be null");
+                    this._imagePath = ImagePath;
                     Debug.WriteLine($"ImagePath set to: {ImagePath}");
                 }
             }

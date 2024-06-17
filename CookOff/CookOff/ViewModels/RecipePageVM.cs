@@ -25,6 +25,7 @@ namespace CookOff.ViewModels
                 OnPropertyChanged();
                 UpdateCounts();
                 AssignStepNumbers();
+                this.Recipe.DisplayImagePath = Path.Combine(GetProjectDirectory(), this.Recipe.ImagePath);
             }
         }
 

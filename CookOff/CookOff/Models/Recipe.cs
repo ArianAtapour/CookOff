@@ -12,6 +12,7 @@ namespace CookOff.Models
         public int RecipeID { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public string DisplayImagePath { get; set; }
         public int Rating { get; set; }
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public List<Step> Steps { get; set; } = new List<Step>();
