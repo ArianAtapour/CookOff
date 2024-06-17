@@ -1,11 +1,12 @@
 RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
-1,Spaghetti,Grams (g),50
-1,Pasta Sauce,Grams (g),30
-1,Parmesan,Teaspoons (tsp),2
-1,Minced Meat,Grams (g),100
 1,Water,Liters (l),1
+1,Spaghetti,Grams (g),100
+1,"Pasta sauce ",Grams (g),50
+1,Minced meat,Grams (g),150
+1,"Parmesan ",Teaspoons (tsp),2
 2,Bread,Pieces (pcs),2
-2,Salad,Pieces (pcs),1
-2,Pickles,Pieces (pcs),4
-2,Tomatoes,Pieces (pcs),2
-3,2,Pieces (pcs),2
+2,"Salad ",Pieces (pcs),1
+2,Ham,Pieces (pcs),1
+2,"Tomatoes ",Pieces (pcs),2
+2,"Cheese ",Pieces (pcs),1
+2,"Sweet garlic sauce ",Teaspoons (tsp),1

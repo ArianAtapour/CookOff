@@ -1,9 +1,9 @@
 RecipeID,Step Description,Timer Required,Timer
-1,Heat water in a pot. Wait till it's fully heated for 5 minutes at maximum temperature.,True,00:05:00
-1,Put the minced meat in a frying pan. Stir it until it's light brown for 10 minutes on maximum heat.,True,00:10:00
-1,Heat the pasta sauce in another pan for 1 minute on low heat.,True,00:01:00
-1,Add all ingredients together once cooked.,False,00:00:00
+1,Boil water in a pot for 10 minutes.,True,00:10:00
+1,Put spaghetti in the pot for 15 minutes.,True,00:15:00
+1,Put pasta sauce in a frying pan and heat it up on maximum heat for 15 seconds.,True,00:00:15
+1,Put all the above ingredients together.,False,00:00:00
 1,Add parmesan. Enjoy :),False,00:00:00
-2,On one slice of bread put all the ingredients.,False,00:00:00
-2,Cover it up with the other piece of bread. Enjoy :),False,00:00:00
-3,2,False,00:00:00
+2,Place one side of the bread in your plate.,False,00:00:00
+2,Put all the above ingredients in any order on the slice of bread.,False,00:00:00
+2,Close the sandwich with the other slice of bread. Enjoy :),False,00:00:00
