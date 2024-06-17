@@ -7,30 +7,33 @@ The purpose of this course is to teach students how to make use of advanced C# t
 ## Application description
 CookOff is a .NET MAUI cooking assistant application which will assist the user in cooking their favourite meal. The user
 will have to create their favourite recipes by writing the ingredients and the steps. Additional features that the application
-includes are: baking timer at the step required, ability to keep track of ingredients or steps completed, and the 
-difficulty of the recipe.
+includes are: baking timer at the step required, ability to keep track of ingredients or steps completed, deliciousness 
+rating, user rating and also the ability to save everything in CSV files so the recipes are saved. The application will only run on Windows.
 
 ## Features
 - Recipe creation
 - Steps
 - Ingredients
+- Deliciousness rating
+- User rating
 - Ability to keep track of ingredients
 - Ability to keep track of steps completed
 - Baking timer
 
 ## MoSCoW Analysis
 
-| Serial Number | Requirement                                                       | Must have | Should have | Could have | Won't have |
-|:-------------:|-------------------------------------------------------------------|:---------:|:-----------:|:----------:|:----------:|
-|      1.       | Multiple OS Support                                               |     ✅     |             |            |            |
-|      2.       | Creation of recipes, steps, ingredients                           |     ✅     |             |            |            |
-|      3.       | Ability to keep track of ingredients                              |     ✅     |             |            |            |
-|      4.       | Ability to keep track of steps completed                          |     ✅     |             |            |            |
-|      5.       | Baking Timer                                                      |     ✅     |             |            |            |
-|      6.       | Image for recipe                                                  |           |      ✅      |            |            |
-|      7.       | Audio cue for the end of timer                                    |           |      ✅      |            |            |
-|      8.       | Rating of recipes                                                 |           |             |     ✅      |            |
-|      9.       | User Authentication                                               |           |             |            |     ✅      |
+| Serial Number | Requirement                              | Must have | Should have | Could have | Won't have |
+|:-------------:|------------------------------------------|:---------:|:-----------:|:----------:|:----------:|
+|      1.       | Creation of recipes, steps, ingredients  |     ✅     |             |            |            |
+|      2.       | Ability to keep track of ingredients     |     ✅     |             |            |            |
+|      3.       | Ability to keep track of steps completed |     ✅     |             |            |            |
+|      4.       | Baking Timer                             |     ✅     |             |            |            |
+|      5.       | Image for recipe                         |     ✅     |             |            |            |
+|      6.       | Audio cue for the end of timer           |     ✅     |             |            |            |
+|      7.       | Rating of recipes                        |     ✅     |             |            |            |
+|      8.       | User Authentication                      |           |             |            |     ✅      |
+|      9.       | Multiplatform Support                    |           |             |            |     ✅      |
+
 
 
 ## Coding Features
