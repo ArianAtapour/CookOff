@@ -10,3 +10,5 @@ RecipeID,Ingredient Name,Ingredient Unit,Ingredient Quantity
 2,"Tomatoes ",Pieces (pcs),2
 2,"Cheese ",Pieces (pcs),1
 2,"Sweet garlic sauce ",Teaspoons (tsp),1
+3,"Frikandel ",Pieces (pcs),1
+3,Fries,Grams (g),50

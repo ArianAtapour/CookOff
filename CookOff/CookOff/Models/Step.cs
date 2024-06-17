@@ -10,14 +10,15 @@ namespace CookOff.Models
 {
     public class Step : INotifyPropertyChanged
     {
-        //Fields
+        // Fields
         private bool isSelected;
         private TimeSpan timer;
         private bool isTimerRunning;
         private bool isTimerPaused;
         private TimeSpan originalTimer;
+        private bool isOriginalTimerSet;
 
-        //Methods
+        // Properties
         public int RecipeID { get; set; }
         public string Description { get; set; }
         public bool TimerRequired { get; set; }
@@ -45,7 +46,7 @@ namespace CookOff.Models
         public ICommand PauseTimerCommand { get; }
         public ICommand StopTimerCommand { get; }
 
-        //Timer constructor
+        // Timer constructor
         public Step()
         {
             StartTimerCommand = new Command(StartTimer);
@@ -53,7 +54,7 @@ namespace CookOff.Models
             StopTimerCommand = new Command(StopTimer);
         }
 
-        //Main constructor
+        // Main constructor
         public Step(int recipeID, string description, bool timerRequired, TimeSpan timer)
         {
             RecipeID = recipeID;
@@ -66,14 +67,20 @@ namespace CookOff.Models
             StopTimerCommand = new Command(StopTimer);
         }
 
-        //Start timer function
+        // Start timer function
         private void StartTimer()
         {
             if (!isTimerRunning || isTimerPaused)
             {
                 isTimerRunning = true;
                 isTimerPaused = false;
-                originalTimer = Timer; // Store the original time when the timer starts
+
+                if (!isOriginalTimerSet)
+                {
+                    originalTimer = Timer; // Store the original time only once
+                    isOriginalTimerSet = true;
+                }
+
                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                 {
                     if (!isTimerRunning)
@@ -92,22 +99,23 @@ namespace CookOff.Models
             }
         }
 
-        //Pausing the timer
+        // Pausing the timer
         private void PauseTimer()
         {
             isTimerPaused = true;
             isTimerRunning = false;
         }
 
-        //Stopping the timer (resets the timer to its original time)
+        // Stopping the timer (resets the timer to its original time)
         private void StopTimer()
         {
             isTimerRunning = false;
             isTimerPaused = false;
             Timer = originalTimer; // Reset the timer to the original time
+            isOriginalTimerSet = false; // Allow the original timer to be set again on next start
         }
 
-        //Play an .mp3 file function
+        // Play an .mp3 file function
         private async void PlaySound()
         {
             try
@@ -133,6 +141,7 @@ namespace CookOff.Models
             }
         }
 
+        // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
