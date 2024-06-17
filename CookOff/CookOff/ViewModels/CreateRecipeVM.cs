@@ -331,7 +331,7 @@ namespace CookOff.ViewModels
 
             CookOff.Utils.CsvHelper.AppendRecipeToCsv(recipesFilePath, ingredientsFilePath, stepsFilePath, newRecipe);
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("MainPage");
         }
 
 

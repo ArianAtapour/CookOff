@@ -4,8 +4,4 @@ RecipeID,Step Description,Timer Required,Timer
 1,Put pasta sauce in a frying pan and heat it up on maximum heat for 15 seconds.,True,00:00:15
 1,Put all the above ingredients together.,False,00:00:00
 1,Add parmesan. Enjoy :),False,00:00:00
-2,Place one side of the bread in your plate.,False,00:00:00
-2,Put all the above ingredients in any order on the slice of bread.,False,00:00:00
-2,Close the sandwich with the other slice of bread. Enjoy :),False,00:00:00
-3,Cook frikandel in a frying pan for 10 seconds.,True,00:00:10
-3,Cook fries for 5 seconds. Enjoy !,True,00:00:05
+2,Make sandwich. Enjoy !,False,00:00:00

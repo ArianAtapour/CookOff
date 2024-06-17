@@ -372,6 +372,8 @@ namespace CookOff.ViewModels
             RemoveIngredientsByRecipeIds(selectedRecipeIds);
             RemoveStepsByRecipeIds(selectedRecipeIds);
             RemoveRatingsByRecipeIds(selectedRecipeIds);
+
+            await Shell.Current.GoToAsync("MainPage");
         }
 
         // Saves the recipe data to the csv
